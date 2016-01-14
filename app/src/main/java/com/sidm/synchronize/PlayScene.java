@@ -2,12 +2,14 @@ package com.sidm.synchronize;
 
 //Import resources
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -16,6 +18,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.view.View;
 
 //Import other classes
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.Random;
 import Game.Background;
 import Game.Entity;
 import Game.Player;
+import Game.SoundManager;
 import Game.Tile;
 
 public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener{
@@ -47,21 +51,28 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
     //FPS
     double FPS;
+    View v;
+    Intent intent = new Intent();
 
     //Variables for the play scene
     private GameThread gameThread;
     private Background playScene_BG;
     Bitmap bg_sky = BitmapFactory.decodeResource(getResources(), R.drawable.game_bg);
+    private boolean isPaused;
 
     //Rect for buttons
-    Rect Rect_MoveLeft;
-    Rect Rect_MoveRight;
+    Rect Rect_MoveLeft, Rect_MoveRight;
     Rect Rect_Laser;
+    Rect Rect_Pause, Rect_Play;
+    Rect Rect_Back;
 
     Bitmap bm_MoveLeft = BitmapFactory.decodeResource(getResources(), R.drawable.leftbutton);
     Bitmap bm_MoveRight = BitmapFactory.decodeResource(getResources(), R.drawable.rightbutton);
     Bitmap bm_Synchro_icon =  BitmapFactory.decodeResource(getResources(), R.drawable.btn_synchro_ready);
     Bitmap bm_Synchro_icon_unready = BitmapFactory.decodeResource(getResources(), R.drawable.btn_synchro_unready);
+    Bitmap bm_Pause = BitmapFactory.decodeResource(getResources(), R.drawable.pausebutton);
+    Bitmap bm_Play = BitmapFactory.decodeResource(getResources(), R.drawable.playbutton);
+    Bitmap bm_Back = BitmapFactory.decodeResource(getResources(), R.drawable.backbutton);
 
     //width and height of screen
     public int screenWidth, screenHeight;
@@ -109,6 +120,12 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         //Initialise array lists
         tile_list = new ArrayList<Tile>();
         InitVars = false;
+        isPaused = false;
+
+        SoundManager.BGM.stop();
+        SoundManager.BGM.reset();
+        SoundManager.BGM = MediaPlayer.create(context, R.raw.background_music);
+        SoundManager.BGM.start();
 
         sensor = (SensorManager)getContext().getSystemService(Context.SENSOR_SERVICE);
         sensor.registerListener(this, sensor.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0), SensorManager.SENSOR_DELAY_NORMAL);
@@ -117,6 +134,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     public void startVibrate(){
         long pattern[] = {0, 50, 0};
         PlayState.vib.vibrate(pattern, -1);
+        SoundManager.SFX.start();
     }
 
     public void stopVibrate(){
@@ -136,6 +154,8 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         if(gameThread.isAlive()){
             gameThread.runThread(false);
             stopVibrate();
+            /*SM.BGM.release();
+            SM.SFX.release();*/
         }
 
         //Stops thread
@@ -168,9 +188,11 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             //Create buttons
             int buttonTop = screenHeight - screenHeight / 5;
             Rect_MoveLeft = new Rect(0, buttonTop, bm_MoveLeft.getWidth(), buttonTop + bm_MoveLeft.getHeight());
-            Rect_MoveRight = new Rect(screenWidth - bm_MoveRight.getWidth(), buttonTop,screenWidth  - bm_MoveRight.getWidth() + bm_MoveRight.getWidth(), buttonTop + bm_MoveRight.getHeight());
+            Rect_MoveRight = new Rect(screenWidth - bm_MoveRight.getWidth(), buttonTop,screenWidth, buttonTop + bm_MoveRight.getHeight());
             Rect_Laser = new Rect(screenWidth / 2 - bm_Synchro_icon.getWidth() / 2, buttonTop, screenWidth / 2 - bm_Synchro_icon.getWidth() / 2 + bm_Synchro_icon.getWidth(), buttonTop + bm_Synchro_icon.getHeight());
-
+            Rect_Pause = new Rect(screenWidth - 200, screenHeight / 3, screenWidth - 200 + bm_Pause.getWidth(), screenHeight / 3 + bm_Pause.getHeight());
+            Rect_Play = new Rect(screenWidth - 200, screenHeight / 3, screenWidth - 200 + bm_Play.getWidth(), screenHeight / 3 +  bm_Play.getHeight());
+            Rect_Back = new Rect(screenWidth - 200, screenHeight / 2, screenWidth - 200 + bm_Back.getWidth(), screenHeight / 2  +  bm_Back.getHeight());
             //Set to true to allow init only when created
             InitVars = true;
         }
@@ -377,6 +399,33 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                         && touchY >= Rect_Laser.top && touchY <= Rect_Laser.bottom) {
                     player.useSynchro();
                 }
+                //Pause
+                if (touchX >= Rect_Pause.left && touchX <= Rect_Pause.right
+                        && touchY >= Rect_Pause.top && touchY <= Rect_Pause.bottom
+                        && isPaused == false) {
+                    isPaused = true;
+                    gameThread.pauseThread(true);
+                    SoundManager.SFX.start();
+                }
+                //Resume
+                else if (touchX >= Rect_Play.left && touchX <= Rect_Play.right
+                        && touchY >= Rect_Play.top && touchY <= Rect_Play.bottom
+                        && isPaused == true) {
+                    isPaused = false;
+                    gameThread.pauseThread(false);
+                    SoundManager.SFX.start();
+                }
+                //Back to menu
+                if (touchX >= Rect_Back.left && touchX <= Rect_Back.right
+                        && touchY >= Rect_Back.top && touchY <= Rect_Back.bottom)
+                {
+                    gameThread.pauseThread(true);
+                    intent.setClass(getContext(), Mainmenu.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    SoundManager.BGM.stop();
+                    getContext().startActivity(intent);
+                    SoundManager.SFX.start();
+                }
                 return true;
             case MotionEvent.ACTION_UP:
                 player.setMoveLeft(false);
@@ -509,7 +558,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 renderTextOnScreen(newCanvas, "Game over", 300, screenHeight / 2, 100);
             }
 
-            //UI portion, RENDER LAST
+            //UI portion
             //Arrow Buttons
             newCanvas.drawBitmap(bm_MoveLeft, Rect_MoveLeft.left, Rect_MoveLeft.top, null);
             newCanvas.drawBitmap(bm_MoveRight, Rect_MoveRight.left, Rect_MoveRight.top, null);
@@ -522,6 +571,14 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 newCanvas.drawBitmap(bm_Synchro_icon_unready, Rect_Laser.left, Rect_Laser.top, null);
             }
 
+            if(isPaused){
+                newCanvas.drawBitmap(bm_Play, Rect_Play.left, Rect_Play.top, null);
+            }
+            else{
+                newCanvas.drawBitmap(bm_Pause, Rect_Pause.left, Rect_Pause.top, null);
+            }
+
+            newCanvas.drawBitmap(bm_Back, Rect_Back.left, Rect_Back.top, null);
 
             //Score, Multiplier, FPS
             renderTextOnScreen(newCanvas, "Score: " + player.getScore(), 50, 175, 80);

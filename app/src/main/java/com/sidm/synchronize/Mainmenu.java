@@ -1,9 +1,7 @@
 package com.sidm.synchronize;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import Game.SoundManager;
+
 public class Mainmenu extends Activity implements View.OnClickListener {
 
 	private Button btn_gameplay;
 	private Button btn_options;
     private Button btn_ranking;
     private Button btn_help;
-
-    MediaPlayer click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,13 @@ public class Mainmenu extends Activity implements View.OnClickListener {
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_mainmenu);
 
-        click = MediaPlayer.create(this, R.raw.click);
+        if(!SoundManager.BGM.isPlaying())
+        {
+            SoundManager.BGM.reset();
+            SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
+            SoundManager.BGM.start();
+            SoundManager.BGM.setLooping(true);
+        }
 
         /*Define buttons*/
         //Start button
@@ -71,7 +75,8 @@ public class Mainmenu extends Activity implements View.OnClickListener {
             intent.setClass(this, Help.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
-        click.start();
+
+        SoundManager.SFX.start();
         startActivity(intent);
     }
 

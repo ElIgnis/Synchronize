@@ -11,10 +11,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import Game.SoundManager;
+
 /*This class displays the game scene*/
 public class PlayState extends Activity implements View.OnClickListener{
-
-    MediaPlayer click;
 
     View v;
     Intent intent = new Intent();
@@ -55,22 +55,17 @@ public class PlayState extends Activity implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);// hide title
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide top bar
-        click = MediaPlayer.create(this, R.raw.click);
-        playScene = new PlayScene(this);
         SelectDifficulty();
         vib = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
     }
 
-
     public void onClick(View v){
         //Back button
         if(v == btn_back || v == btn_diff_back) {
-
-            //playScene.stopVibrate();
             //Set to go to next class
             intent.setClass(this, Mainmenu.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
+            SoundManager.BGM.stop();
             startActivity(intent);
         }
 
@@ -134,7 +129,7 @@ public class PlayState extends Activity implements View.OnClickListener{
         if (v == btn_color_back){
             SelectDifficulty();
         }
-        click.start();
+        SoundManager.SFX.start();
     }
 
     void SelectDifficulty(){
@@ -196,15 +191,15 @@ public class PlayState extends Activity implements View.OnClickListener{
 
     void InitGame(){
         //Show layout on screen(page == view)
-        v = getLayoutInflater().inflate(R.layout.activity_gameplay, null);
-
+        //v = getLayoutInflater().inflate(R.layout.activity_gameplay, null);
+        playScene = new PlayScene(this);
         playScene.setDifficulty(m_iDifficulty);
         playScene.setGameMode(m_iGameMode);
         playScene.setColor(m_iColor);
         setContentView(playScene);
-        addContentView(v, new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN));
-        btn_back = (Button) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
+        //addContentView(v, new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN));
+        //btn_back = (Button) findViewById(R.id.btn_back);
+        //btn_back.setOnClickListener(this);
     }
 
     protected void onPause(){super.onPause();}

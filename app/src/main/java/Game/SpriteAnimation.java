@@ -7,8 +7,6 @@ import android.graphics.Rect;
 public class SpriteAnimation {
     private Bitmap sprite;
     private int m_iCurrentFrame;
-    //private int m_iStartFrame;
-    //private int m_iEndFrame;
     private double m_dFrameTime = 0;
     private double m_dPlaySpeed;
     private boolean m_bRepeat;

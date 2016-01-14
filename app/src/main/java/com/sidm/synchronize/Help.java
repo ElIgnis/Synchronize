@@ -2,18 +2,17 @@ package com.sidm.synchronize;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import Game.SoundManager;
+
 public class Help extends Activity implements View.OnClickListener{
 
     Button btn_help_back;
-
-    MediaPlayer click;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +23,6 @@ public class Help extends Activity implements View.OnClickListener{
 
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_help);
-
-        click = MediaPlayer.create(this, R.raw.click);
 
         /*Define buttons*/
         btn_help_back = (Button)findViewById(R.id.btn_help_back);
@@ -42,7 +39,7 @@ public class Help extends Activity implements View.OnClickListener{
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
 
-        click.start();
+        SoundManager.SFX.start();
         startActivity(intent);
     }
 

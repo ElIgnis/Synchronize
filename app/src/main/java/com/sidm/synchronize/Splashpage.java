@@ -10,13 +10,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import Game.SoundManager;
+
 public class Splashpage extends Activity {
 
     protected boolean _active = true;
     protected int _splashTime = 5000; // ms
-
-    MediaPlayer bgm;
-    MediaPlayer click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +28,24 @@ public class Splashpage extends Activity {
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_splashpage);
 
-        bgm = MediaPlayer.create(this, R.raw.bgm);
-        click = MediaPlayer.create(this, R.raw.click);
+        SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
+        SoundManager.SFX = MediaPlayer.create(this, R.raw.click);
 
-        bgm.start();
         //thread for displaying the Splash Screen
         Thread splashTread = new Thread() {
             @Override
             public void run() {
+                SoundManager.BGM.start();
+                SoundManager.BGM.setLooping(true);
+
                 //if user taps screen
                 RelativeLayout rLayout =  (RelativeLayout) findViewById(R.id.splashpage);
                 rLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // Add codes
+                        SoundManager.SFX.start();
                         Intent intent = new Intent(Splashpage.this, Mainmenu.class);
-                        click.start();
                         startActivity(intent);
                     }
                 });
