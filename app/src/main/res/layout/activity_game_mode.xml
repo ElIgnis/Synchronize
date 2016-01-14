@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="16dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="16dp"
+    android:background="@drawable/background"
+    tools:context=".PlayState">
+    <!--android:background="@drawable/gamescene"-->
+
+    <!--Easy button-->
+    <Button
+        android:id = "@+id/btn_mode_normal"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Normal"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="99dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--Normal button-->
+    <Button
+        android:id = "@+id/btn_mode_random"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Random"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/btn_mode_normal"
+        android:layout_alignStart="@+id/btn_mode_normal" />
+
+    <!--Hard button-->
+    <Button
+        android:id = "@+id/btn_mode_cycle"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Cycle"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/btn_mode_random"
+        android:layout_alignStart="@+id/btn_mode_random" />
+
+    <!--Hard button-->
+    <Button
+        android:id = "@+id/btn_mode_cyclerandom"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Cycle Random"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/btn_mode_cycle"
+        android:layout_alignStart="@+id/btn_mode_cycle"
+        android:layout_marginTop="27dp" />
+
+    <!--Back button-->
+    <Button
+        android:id = "@+id/btn_mode_back"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Back"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

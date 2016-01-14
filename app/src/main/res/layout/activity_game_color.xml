@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="16dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="16dp"
+    android:background="@drawable/background"
+    tools:context=".PlayState">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select Player Color"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView"
+        android:layout_below="@+id/btn_diff_back"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <!--Red Color button-->
+    <Button
+        android:id = "@+id/btn_color_red"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_red"
+        android:layout_marginTop="170dp"
+        android:layout_centerHorizontal="true" />
+
+    <!--Green Color button-->
+    <Button
+        android:id = "@+id/btn_color_green"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_green"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="270dp" />
+
+    <!--Blue Color button-->
+    <Button
+        android:id = "@+id/btn_color_blue"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_blue"
+        android:layout_marginTop="270dp"
+        android:layout_marginLeft="10dp" />
+
+    <!--Yellow Color button-->
+    <Button
+        android:id = "@+id/btn_color_yellow"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_yellow"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="400dp" />
+
+    <!--Purple Color button-->
+    <Button
+        android:id = "@+id/btn_color_purple"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_purple"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="40dp" />
+
+    <!--Back button-->
+    <Button
+        android:id = "@+id/btn_color_back"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Back"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

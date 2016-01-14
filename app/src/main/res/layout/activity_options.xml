@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="16dp"
+    android:background="@drawable/background"
+    tools:context=".Options">
+
+    <TextView android:id="@+id/text_options"
+        android:text="Options"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/btn_confirm"
+        android:layout_marginTop="34dp" />
+
+    <Button
+        android:id="@+id/btn_back"
+
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        android:textAllCaps="false"
+        android:layout_marginBottom="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+
+        android:text="Confirm"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        android:textAllCaps="false"
+        android:layout_above="@+id/btn_back"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp" />
+
+    <TextView android:id="@+id/text_sfx"
+        android:text="SFX :"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_sfx"
+        android:layout_alignBottom="@+id/btn_sfx"
+        android:layout_alignStart="@+id/text_bgm" />
+
+    <Button
+        android:id="@+id/btn_sfx"
+
+        android:text="On"
+        android:textColor="#000000"
+        android:textSize="20dp"
+
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        android:textAllCaps="false"
+        android:layout_above="@+id/btn_bgm"
+        android:layout_alignStart="@+id/btn_bgm"
+        android:layout_marginBottom="32dp" />
+
+    <TextView android:id="@+id/text_bgm"
+        android:text="BGM :"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/btn_confirm" />
+
+    <Button
+        android:id="@+id/btn_bgm"
+
+        android:text="On"
+        android:textColor="#000000"
+        android:textSize="20dp"
+
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        android:textAllCaps="false"
+        android:layout_marginEnd="59dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

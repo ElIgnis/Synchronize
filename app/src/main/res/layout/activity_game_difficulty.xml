@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="16dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="16dp"
+    android:background="@drawable/background"
+    tools:context=".PlayState">
+    <!--android:background="@drawable/gamescene"-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select difficulty"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView"
+        android:layout_below="@+id/btn_diff_back"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+    <!--Easy button-->
+    <Button
+        android:id = "@+id/btn_diff_easy"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Easy"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp" />
+
+    <!--Normal button-->
+    <Button
+        android:id = "@+id/btn_diff_normal"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Normal"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/btn_diff_easy"
+        android:layout_alignStart="@+id/btn_diff_easy"
+        android:layout_marginTop="57dp" />
+
+    <!--Hard button-->
+    <Button
+        android:id = "@+id/btn_diff_hard"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Hard"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/btn_diff_normal"
+        android:layout_alignStart="@+id/btn_diff_normal" />
+
+    <!--Back button-->
+    <Button
+        android:id = "@+id/btn_diff_back"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Back"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
