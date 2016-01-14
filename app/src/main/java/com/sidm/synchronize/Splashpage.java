@@ -1,7 +1,9 @@
 package com.sidm.synchronize;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ public class Splashpage extends Activity {
 
     protected boolean _active = true;
     protected int _splashTime = 5000; // ms
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class Splashpage extends Activity {
 
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_splashpage);
+        prefs = getSharedPreferences("OptionsData", Context.MODE_PRIVATE);
 
         SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
         SoundManager.SFX = MediaPlayer.create(this, R.raw.click);
@@ -35,6 +39,8 @@ public class Splashpage extends Activity {
         Thread splashTread = new Thread() {
             @Override
             public void run() {
+                SoundManager.SFXVolume = prefs.getFloat("SFXValue", 100);
+                SoundManager.BGMVolume = prefs.getFloat("BGMValue", 100);
                 SoundManager.BGM.start();
                 SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
                 SoundManager.BGM.setLooping(true);

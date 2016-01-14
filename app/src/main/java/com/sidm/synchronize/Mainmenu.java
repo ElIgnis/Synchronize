@@ -1,7 +1,9 @@
 package com.sidm.synchronize;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import Game.HighscoreManager;
 import Game.SoundManager;
 
 public class Mainmenu extends Activity implements View.OnClickListener {
@@ -17,6 +20,7 @@ public class Mainmenu extends Activity implements View.OnClickListener {
 	private Button btn_options;
     private Button btn_ranking;
     private Button btn_help;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +33,14 @@ public class Mainmenu extends Activity implements View.OnClickListener {
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_mainmenu);
 
+
+
         if(!SoundManager.BGM.isPlaying())
         {
             SoundManager.BGM.reset();
             SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
+            SoundManager.SFX = MediaPlayer.create(this, R.raw.click);
+            SoundManager.SFX.setVolume(SoundManager.SFXVolume, SoundManager.SFXVolume);
             SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
             SoundManager.BGM.start();
             SoundManager.BGM.setLooping(true);
@@ -51,6 +59,21 @@ public class Mainmenu extends Activity implements View.OnClickListener {
 
         btn_help = (Button)findViewById((R.id.btn_help));
         btn_help.setOnClickListener(this);
+
+        DataLoader();
+    }
+
+    public void DataLoader(){
+        //Load Highscores Data
+        prefs = getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
+
+        HighscoreManager.HighScore_List = new int[5];
+
+        HighscoreManager.HighScore_List[0] = prefs.getInt("FirstPlace", 0);
+        HighscoreManager.HighScore_List[1] = prefs.getInt("SecondPlace", 0);
+        HighscoreManager.HighScore_List[2] = prefs.getInt("ThirdPlace", 0);
+        HighscoreManager.HighScore_List[3] = prefs.getInt("FourthPlace", 0);
+        HighscoreManager.HighScore_List[4] = prefs.getInt("FifthPlace", 0);
     }
 
     public void onClick(View v){

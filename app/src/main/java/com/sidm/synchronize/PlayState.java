@@ -197,6 +197,7 @@ public class PlayState extends Activity implements View.OnClickListener{
         playScene.setGameMode(m_iGameMode);
         playScene.setColor(m_iColor);
         setContentView(playScene);
+
         //addContentView(v, new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN));
         //btn_back = (Button) findViewById(R.id.btn_back);
         //btn_back.setOnClickListener(this);

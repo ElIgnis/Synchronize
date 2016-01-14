@@ -21,8 +21,6 @@ public class Options extends Activity implements View.OnClickListener{
     private static TextView SFX_Text, BGM_Text;
     SharedPreferences prefs;
 
-    SoundManager SM;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -121,7 +119,7 @@ public class Options extends Activity implements View.OnClickListener{
         intent.setClass(this, Mainmenu.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        SM.SFX.start();
+        SoundManager.SFX.start();
         startActivity(intent);
     }
 

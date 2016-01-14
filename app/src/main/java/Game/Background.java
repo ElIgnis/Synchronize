@@ -38,4 +38,11 @@ public class Background {
         if(position.y < 0)
             newCanvas.drawBitmap(bg_Scaled, position.x, position.y  + screenSize.y, null);
     }
+
+    public void Exit(){
+        bg_Image.recycle();
+        bg_Scaled.recycle();
+        bg_Image = null;
+        bg_Scaled = null;
+    }
 }

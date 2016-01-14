@@ -12,7 +12,7 @@
 
     <TextView android:id="@+id/text_options"
         android:text="Options"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
 
     <TextView android:id="@+id/text_sfx"
         android:text="SFX :"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
 
     <TextView android:id="@+id/text_bgm"
         android:text="BGM :"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

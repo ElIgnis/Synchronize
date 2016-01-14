@@ -27,6 +27,7 @@ import java.util.Random;
 
 import Game.Background;
 import Game.Entity;
+import Game.HighscoreManager;
 import Game.Player;
 import Game.SoundManager;
 import Game.Tile;
@@ -58,7 +59,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     //Variables for the play scene
     private GameThread gameThread;
     private Background playScene_BG;
-    Bitmap bg_sky = BitmapFactory.decodeResource(getResources(), R.drawable.game_bg);
+    Bitmap bm_gamebg = BitmapFactory.decodeResource(getResources(), R.drawable.game_bg);
     private boolean isPaused;
 
     //Rect for buttons
@@ -131,6 +132,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         SoundManager.BGM = MediaPlayer.create(context, R.raw.background_music);
         SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
         SoundManager.BGM.start();
+        SoundManager.SFX = MediaPlayer.create(context, R.raw.click);
 
         sensor = (SensorManager)getContext().getSystemService(Context.SENSOR_SERVICE);
         sensor.registerListener(this, sensor.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0), SensorManager.SENSOR_DELAY_NORMAL);
@@ -139,7 +141,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     public void startVibrate(){
         long pattern[] = {0, 50, 0};
         PlayState.vib.vibrate(pattern, -1);
-        SoundManager.SFX.start();
+        //SoundManager.SFX.start();
     }
 
     public void stopVibrate(){
@@ -159,6 +161,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         if(gameThread.isAlive()){
             gameThread.runThread(false);
             stopVibrate();
+            Exit();
         }
 
         //Stops thread
@@ -177,7 +180,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     public void surfaceCreated(SurfaceHolder surfaceHolder){
         if(!InitVars){
             //Initialise background
-            playScene_BG = new Background(bg_sky, screenWidth, screenHeight);
+            playScene_BG = new Background(bm_gamebg, screenWidth, screenHeight);
             playScene_BG.setScrollAmount(-5);
 
             //Initialise player
@@ -206,6 +209,58 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             gameThread.runThread(true);
             gameThread.start();
         }
+    }
+
+    public void Exit(){
+
+        //Stops thread and changes to menu
+        gameThread.pauseThread(true);
+        intent.setClass(getContext(), Mainmenu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        SoundManager.BGM.stop();
+        getContext().startActivity(intent);
+        SoundManager.SFX.start();
+
+        //Clean up loaded bitmaps
+        bm_Back.recycle();
+        bm_MoveRight.recycle();
+        bm_MoveLeft.recycle();
+        bm_Back.recycle();
+        bm_Synchro_icon.recycle();
+        bm_Synchro_icon_unready.recycle();
+        bm_Play.recycle();
+        bm_Pause.recycle();
+        bm_gamebg.recycle();
+        Spr_RedTile.recycle();
+        Spr_BlueTile.recycle();
+        Spr_GreenTile.recycle();
+        Spr_YellowTile.recycle();
+        Spr_PurpleTile.recycle();
+        Spr_Player_Idle.recycle();
+        Spr_Player_MoveLeft.recycle();
+        Spr_Player_MoveRight.recycle();
+        Spr_Player_Fall.recycle();
+
+        bm_Back = null;
+        bm_MoveRight = null;
+        bm_MoveLeft = null;
+        bm_Back = null;
+        bm_Synchro_icon = null;
+        bm_Synchro_icon_unready = null;
+        bm_Play = null;
+        bm_Pause = null;
+        bm_gamebg = null;
+        Spr_RedTile = null;
+        Spr_BlueTile = null;
+        Spr_GreenTile = null;
+        Spr_YellowTile = null;
+        Spr_PurpleTile = null;
+        Spr_Player_Idle = null;
+        Spr_Player_MoveLeft = null;
+        Spr_Player_MoveRight = null;
+        Spr_Player_Fall = null;
+
+        playScene_BG.Exit();
     }
 
     public void loadColouredImages(int color){
@@ -438,10 +493,27 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public void update(float fps){
-        this.FPS = fps;
-        playScene_BG.update();
-        player.update();
-        updateTiles();
+        if(!player.getDead())
+        {
+            this.FPS = fps;
+            playScene_BG.update();
+            player.update();
+            updateTiles();
+        }
+        else{
+            CheckHighScore(player.getScore());
+            gameThread.pauseThread(true);
+            intent.setClass(getContext(), Mainmenu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            SoundManager.BGM.stop();
+            getContext().startActivity(intent);
+            SoundManager.SFX.start();
+/*            //TODO: Alert to display beat high score
+            if(CheckHighScore(player.getScore()))
+            {
+
+            }*/
+        }
     }
 
     public void updateTiles(){
@@ -535,6 +607,42 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         if(a.getRight() + a.getVelocity().x  > b.getLeft() &&
                 (a.getBottom() + a.getVelocity().y * 10) > (b.getTop() + (b.getScale().y / 2))){
             return true;
+        }
+        return false;
+    }
+
+    public boolean CheckHighScore(int score){
+        for(int i = 0; i < HighscoreManager.HighScore_List.length - 1; ++i)
+        {
+            //Replaces the lowest score if won
+            if(score > HighscoreManager.HighScore_List[4])
+            {
+                //Replaces the lowest score
+                HighscoreManager.HighScore_List[4] = score;
+
+                //Sorts the score
+                for(int j = HighscoreManager.HighScore_List.length -1; j > 0 ; --j){
+                    if(HighscoreManager.HighScore_List[j] > HighscoreManager.HighScore_List[j-1]){
+                        int temp = HighscoreManager.HighScore_List[j];
+                        HighscoreManager.HighScore_List[j] = HighscoreManager.HighScore_List[j-1];
+                        HighscoreManager.HighScore_List[j-1] = temp;
+                    }
+                }
+
+                //Saves the score
+                prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefEditor = prefs.edit();
+                prefEditor.putInt("FirstPlace", HighscoreManager.HighScore_List[0]);
+                prefEditor.putInt("SecondPlace", HighscoreManager.HighScore_List[1]);
+                prefEditor.putInt("ThirdPlace", HighscoreManager.HighScore_List[2]);
+                prefEditor.putInt("FourthPlace", HighscoreManager.HighScore_List[3]);
+                prefEditor.putInt("FifthPlace", HighscoreManager.HighScore_List[4]);
+                prefEditor.commit();
+
+                return true;
+            }
+            else
+                return false;
         }
         return false;
     }

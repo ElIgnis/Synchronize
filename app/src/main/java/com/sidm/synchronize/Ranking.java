@@ -1,20 +1,23 @@
 package com.sidm.synchronize;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
+import Game.HighscoreManager;
 import Game.SoundManager;
 
-/**
- * Created by Marcus on 11/19/2015.
- */
 public class Ranking extends Activity implements View.OnClickListener{
     Button btn_back;
+    SharedPreferences prefs;
+    private static TextView First_Text, Second_Text, Third_Text, Fourth_Text, Fifth_Text;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +32,22 @@ public class Ranking extends Activity implements View.OnClickListener{
         /*Define buttons*/
         btn_back = (Button)findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
+
+        //Sets the highscore based on data loaded
+        First_Text = (TextView)findViewById(R.id.First);
+        Second_Text = (TextView)findViewById(R.id.Second);
+        Third_Text = (TextView)findViewById(R.id.Third);
+        Fourth_Text = (TextView)findViewById(R.id.Fourth);
+        Fifth_Text = (TextView)findViewById(R.id.Fifth);
+
+        First_Text.setText(String.valueOf(HighscoreManager.HighScore_List[0]));
+        Second_Text.setText(String.valueOf(HighscoreManager.HighScore_List[1]));
+        Third_Text.setText(String.valueOf(HighscoreManager.HighScore_List[2]));
+        Fourth_Text.setText(String.valueOf(HighscoreManager.HighScore_List[3]));
+        Fifth_Text.setText(String.valueOf(HighscoreManager.HighScore_List[4]));
     }
+
+
 
     public void onClick(View v){
         Intent intent = new Intent();
