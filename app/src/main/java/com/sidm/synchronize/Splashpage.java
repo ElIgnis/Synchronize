@@ -36,6 +36,7 @@ public class Splashpage extends Activity {
             @Override
             public void run() {
                 SoundManager.BGM.start();
+                SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
                 SoundManager.BGM.setLooping(true);
 
                 //if user taps screen

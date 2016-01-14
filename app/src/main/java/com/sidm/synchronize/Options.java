@@ -1,6 +1,7 @@
 package com.sidm.synchronize;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,11 +16,10 @@ import Game.SoundManager;
 
 public class Options extends Activity implements View.OnClickListener{
 
-    Button btn_back;
-/*    private static SeekBar SFXSlider, BGMSlider;
+    Button btn_back, btn_save;
+    private static SeekBar SFXSlider, BGMSlider;
     private static TextView SFX_Text, BGM_Text;
-    private int SFXValue, BGMValue;
-    public static final String PREFS_NAME = "My Prefs";*/
+    SharedPreferences prefs;
 
     SoundManager SM;
 
@@ -37,21 +37,27 @@ public class Options extends Activity implements View.OnClickListener{
         btn_back = (Button)findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
 
-/*        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SFXValue = settings.getInt("SFXValue", 0);
-        BGMValue = settings.getInt("BGMValue", 0);
-        SeekBarUpdate();*/
+        btn_save = (Button)findViewById(R.id.btn_save);
+        btn_save.setOnClickListener(this);
+
+        prefs = getSharedPreferences("OptionsData", Context.MODE_PRIVATE);
+        SoundManager.SFXVolume = prefs.getFloat("SFXValue", 100);
+        SoundManager.BGMVolume = prefs.getFloat("BGMValue", 100);
+
+        SeekBarUpdate();
     }
 
-    /*void SeekBarUpdate(){
-
+    void SeekBarUpdate(){
         //Slider bar
         SFXSlider = (SeekBar)findViewById(R.id.SFX_SeekBar);
         BGMSlider = (SeekBar)findViewById(R.id.BGM_SeekBar);
         SFX_Text = (TextView)findViewById(R.id.SFX_Value);
         BGM_Text = (TextView)findViewById(R.id.BGM_Value);
-        SFX_Text.setText(String.valueOf(SFXSlider.getProgress()));
-        BGM_Text.setText(String.valueOf(BGMSlider.getProgress()));
+        SFX_Text.setText(String.valueOf((int)SoundManager.SFXVolume));
+        BGM_Text.setText(String.valueOf((int)SoundManager.BGMVolume));
+
+        SFXSlider.setProgress((int)SoundManager.SFXVolume);
+        BGMSlider.setProgress((int)SoundManager.BGMVolume);
 
         //Slider for SFX
         SFXSlider.setOnSeekBarChangeListener(
@@ -59,8 +65,8 @@ public class Options extends Activity implements View.OnClickListener{
 
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        SFXValue = progress;
-                        SFX_Text.setText(String.valueOf(SFXValue));
+                        SoundManager.SFXVolume = progress;
+                        SFX_Text.setText(String.valueOf((int)SoundManager.SFXVolume));
                     }
 
                     @Override
@@ -76,12 +82,12 @@ public class Options extends Activity implements View.OnClickListener{
 
         //Slider for BGM
         BGMSlider.setOnSeekBarChangeListener(
-                new SeekBar.OnSeekBarChangeListener(){
+                new SeekBar.OnSeekBarChangeListener() {
 
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        BGMValue = progress;
-                        BGM_Text.setText(String.valueOf(BGMValue));
+                        SoundManager.BGMVolume = progress;
+                        BGM_Text.setText(String.valueOf((int) SoundManager.BGMVolume));
                     }
 
                     @Override
@@ -96,19 +102,24 @@ public class Options extends Activity implements View.OnClickListener{
                 });
 
 
-    }*/
+    }
 
     public void onClick(View v){
         Intent intent = new Intent();
 
-       if (v == btn_back){
-            //Set to go to next class
-            intent.setClass(this, Mainmenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //Save modified changes
+        if (v == btn_save){
+            SharedPreferences.Editor prefEditor = prefs.edit();
+            prefEditor.putFloat("BGMValue", SoundManager.BGMVolume);
+            prefEditor.putFloat("SFXValue", SoundManager.SFXVolume);
+            prefEditor.commit();
 
-/*           SoundManager.BGM.setVolume(BGMValue, BGMValue);
-           SoundManager.SFX.setVolume(SFXValue, SFXValue);*/
+            SoundManager.BGM.setVolume(SoundManager.BGMVolume / 100, SoundManager.BGMVolume / 100);
+            SoundManager.SFX.setVolume(SoundManager.SFXVolume / 100, SoundManager.SFXVolume / 100);
         }
+
+        intent.setClass(this, Mainmenu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         SM.SFX.start();
         startActivity(intent);

@@ -8,4 +8,5 @@ import android.media.MediaPlayer;
  */
 public class SoundManager extends Activity{
     public static MediaPlayer BGM, SFX;
+    public static float BGMVolume, SFXVolume;
 }

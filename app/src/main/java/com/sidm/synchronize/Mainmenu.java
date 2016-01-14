@@ -33,6 +33,7 @@ public class Mainmenu extends Activity implements View.OnClickListener {
         {
             SoundManager.BGM.reset();
             SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
+            SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
             SoundManager.BGM.start();
             SoundManager.BGM.setLooping(true);
         }

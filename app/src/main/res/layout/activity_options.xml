@@ -16,9 +16,8 @@
         android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/btn_back"
-        android:layout_marginTop="34dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
     <Button
         android:id="@+id/btn_back"
@@ -36,9 +35,29 @@
         android:shadowRadius="5"
 
         android:textAllCaps="false"
-        android:layout_marginBottom="56dp"
+        android:layout_alignTop="@+id/btn_save"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="50dp" />" />
+
+    <Button
+        android:id="@+id/btn_save"
+
+        android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        android:textAllCaps="false"
+        android:layout_marginBottom="58dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginLeft="50dp" />
 
     <TextView android:id="@+id/text_sfx"
         android:text="SFX :"

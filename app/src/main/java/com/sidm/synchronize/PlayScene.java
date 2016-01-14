@@ -3,6 +3,7 @@ package com.sidm.synchronize;
 //Import resources
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -100,6 +101,9 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     private float[] values = {0, 0, 0};
     private long lastTime = System.currentTimeMillis();
 
+    //Shared preferences
+    SharedPreferences prefs;
+
     //Default constructor to take in context from PlayState
     public PlayScene(Context context) {
         super(context);
@@ -125,6 +129,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         SoundManager.BGM.stop();
         SoundManager.BGM.reset();
         SoundManager.BGM = MediaPlayer.create(context, R.raw.background_music);
+        SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
         SoundManager.BGM.start();
 
         sensor = (SensorManager)getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -154,8 +159,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         if(gameThread.isAlive()){
             gameThread.runThread(false);
             stopVibrate();
-            /*SM.BGM.release();
-            SM.SFX.release();*/
         }
 
         //Stops thread
