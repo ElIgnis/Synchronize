@@ -70,7 +70,7 @@ public class GameThread extends Thread{
                 m_lWaitTime = targetTime - m_lTimeMillis;
 
                 try {
-                    this.sleep(m_lWaitTime);
+                    sleep(m_lWaitTime);
                 } catch (Exception e) {
                 }
 

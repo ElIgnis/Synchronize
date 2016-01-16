@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -41,6 +42,23 @@ public class Options extends Activity implements View.OnClickListener{
         prefs = getSharedPreferences("OptionsData", Context.MODE_PRIVATE);
         SoundManager.SFXVolume = prefs.getFloat("SFXValue", 100);
         SoundManager.BGMVolume = prefs.getFloat("BGMValue", 100);
+
+        //Custom font
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Gemcut.otf");
+
+        TextView txt_header = (TextView) findViewById(R.id.text_options);
+        TextView txt_sfx = (TextView) findViewById(R.id.text_sfx);
+        TextView txt_bgm = (TextView) findViewById(R.id.text_bgm);
+        TextView txt_sfx_value = (TextView) findViewById(R.id.SFX_Value);
+        TextView txt_bgm_value = (TextView) findViewById(R.id.BGM_Value);
+        txt_header.setTypeface(font);
+        txt_sfx.setTypeface(font);
+        txt_bgm.setTypeface(font);
+        txt_sfx_value.setTypeface(font);
+        txt_bgm_value.setTypeface(font);
+
+        btn_back.setTypeface(font);
+        btn_save.setTypeface(font);
 
         SeekBarUpdate();
     }

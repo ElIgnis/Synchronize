@@ -45,7 +45,7 @@ public class Tile extends Entity {
 
     public void draw(Canvas newCanvas){
         if(m_bActive)
-            _SA.onDraw(newCanvas, (int)getPosition().x, (int)getPosition().y, (int)getScale().x, (int)getScale().y);
+            _SA.onDraw(newCanvas, getPosition().x, getPosition().y, getScale().x, getScale().y);
     }
 
     public int getColor(){

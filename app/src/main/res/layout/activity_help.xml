@@ -10,7 +10,7 @@
     android:background="@drawable/help"
     tools:context=".Help">
 
-    <TextView android:id="@+id/text"
+    <TextView android:id="@+id/text_help"
         android:text="How to play:"
         android:textColor="#FFFFFF"
         android:textSize="30dp"

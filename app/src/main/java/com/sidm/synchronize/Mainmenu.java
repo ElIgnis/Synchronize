@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import Game.HighscoreManager;
 import Game.SoundManager;
@@ -32,8 +34,6 @@ public class Mainmenu extends Activity implements View.OnClickListener {
 
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_mainmenu);
-
-
 
         if(!SoundManager.BGM.isPlaying())
         {
@@ -59,6 +59,16 @@ public class Mainmenu extends Activity implements View.OnClickListener {
 
         btn_help = (Button)findViewById((R.id.btn_help));
         btn_help.setOnClickListener(this);
+
+        //Custom font
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Gemcut.otf");
+
+        TextView txt_header = (TextView) findViewById(R.id.text_title2);
+        txt_header.setTypeface(font);
+        btn_gameplay.setTypeface(font);
+        btn_options.setTypeface(font);
+        btn_ranking.setTypeface(font);
+        btn_help.setTypeface(font);
 
         DataLoader();
     }

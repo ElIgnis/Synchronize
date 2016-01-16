@@ -3,6 +3,7 @@ package com.sidm.synchronize;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import Game.SoundManager;
 
@@ -50,13 +52,19 @@ public class PlayState extends Activity implements View.OnClickListener{
     Button btn_mode_cyclerandom;
     Button btn_mode_back;
 
+    //Custom font
+    Typeface font;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);// hide title
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide top bar
+        font = Typeface.createFromAsset(getAssets(), "fonts/Gemcut.otf");
         SelectDifficulty();
         vib = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+
+
     }
 
     public void onClick(View v){
@@ -133,19 +141,28 @@ public class PlayState extends Activity implements View.OnClickListener{
     }
 
     void SelectDifficulty(){
-            setContentView(R.layout.activity_game_difficulty);
+        setContentView(R.layout.activity_game_difficulty);
 
-            btn_diff_easy = (Button)findViewById(R.id.btn_diff_easy);
-            btn_diff_easy.setOnClickListener(this);
+        btn_diff_easy = (Button)findViewById(R.id.btn_diff_easy);
+        btn_diff_easy.setOnClickListener(this);
 
-            btn_diff_normal = (Button)findViewById(R.id.btn_diff_normal);
-            btn_diff_normal.setOnClickListener(this);
+        btn_diff_normal = (Button)findViewById(R.id.btn_diff_normal);
+        btn_diff_normal.setOnClickListener(this);
 
-            btn_diff_hard = (Button)findViewById(R.id.btn_diff_hard);
-            btn_diff_hard.setOnClickListener(this);
+        btn_diff_hard = (Button)findViewById(R.id.btn_diff_hard);
+        btn_diff_hard.setOnClickListener(this);
 
-            btn_diff_back = (Button)findViewById(R.id.btn_diff_back);
-            btn_diff_back.setOnClickListener(this);
+        btn_diff_back = (Button)findViewById(R.id.btn_diff_back);
+        btn_diff_back.setOnClickListener(this);
+
+        //Custom font
+        TextView txt_header = (TextView) findViewById(R.id.text_difficulty);
+
+        txt_header.setTypeface(font);
+        btn_diff_easy.setTypeface(font);
+        btn_diff_normal.setTypeface(font);
+        btn_diff_hard.setTypeface(font);
+        btn_diff_back.setTypeface(font);
     }
 
     void SelectMode(){
@@ -187,6 +204,17 @@ public class PlayState extends Activity implements View.OnClickListener{
 
         btn_color_back = (Button)findViewById(R.id.btn_color_back);
         btn_color_back.setOnClickListener(this);
+
+        //Custom font
+        TextView txt_header = (TextView) findViewById(R.id.text_color);
+
+        txt_header.setTypeface(font);
+        btn_color_red.setTypeface(font);
+        btn_color_green.setTypeface(font);
+        btn_color_blue.setTypeface(font);
+        btn_color_yellow.setTypeface(font);
+        btn_color_purple.setTypeface(font);
+        btn_color_back.setTypeface(font);
     }
 
     void InitGame(){

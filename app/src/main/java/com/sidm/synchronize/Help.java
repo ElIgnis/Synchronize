@@ -2,11 +2,13 @@ package com.sidm.synchronize;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import Game.SoundManager;
 
@@ -27,6 +29,13 @@ public class Help extends Activity implements View.OnClickListener{
         /*Define buttons*/
         btn_help_back = (Button)findViewById(R.id.btn_help_back);
         btn_help_back.setOnClickListener(this);
+
+        //Custom font
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Gemcut.otf");
+
+        TextView txt_header = (TextView) findViewById(R.id.text_help);
+        txt_header.setTypeface(font);
+        btn_help_back.setTypeface(font);
     }
 
     public void onClick(View v){

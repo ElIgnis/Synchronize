@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import Game.SoundManager;
 
@@ -30,6 +32,15 @@ public class Splashpage extends Activity {
 
         //Show layout on screen(page == view)
         setContentView(R.layout.activity_splashpage);
+
+        //Custom font
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Gemcut.otf");
+
+        TextView txt_header = (TextView) findViewById(R.id.text_title);
+        TextView txt_footer = (TextView) findViewById(R.id.text_tap);
+        txt_header.setTypeface(font);
+        txt_footer.setTypeface(font);
+
         prefs = getSharedPreferences("OptionsData", Context.MODE_PRIVATE);
 
         SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);

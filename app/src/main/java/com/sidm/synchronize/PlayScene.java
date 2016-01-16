@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -60,7 +61,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     private GameThread gameThread;
     private Background playScene_BG;
     Bitmap bm_gamebg = BitmapFactory.decodeResource(getResources(), R.drawable.game_bg);
-    private boolean isPaused;
+    private boolean isPaused, newHighScore, checkHighScore;
 
     //Rect for buttons
     Rect Rect_MoveLeft, Rect_MoveRight;
@@ -105,6 +106,9 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     //Shared preferences
     SharedPreferences prefs;
 
+    //Custom font
+    Typeface font;
+
     //Default constructor to take in context from PlayState
     public PlayScene(Context context) {
         super(context);
@@ -126,17 +130,34 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         tile_list = new ArrayList<Tile>();
         InitVars = false;
         isPaused = false;
+        checkHighScore = true;
+        newHighScore = false;
 
         SoundManager.BGM.stop();
         SoundManager.BGM.reset();
         SoundManager.BGM = MediaPlayer.create(context, R.raw.background_music);
         SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
         SoundManager.BGM.start();
+        SoundManager.BGM.setLooping(true);
         SoundManager.SFX = MediaPlayer.create(context, R.raw.click);
 
         sensor = (SensorManager)getContext().getSystemService(Context.SENSOR_SERVICE);
         sensor.registerListener(this, sensor.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0), SensorManager.SENSOR_DELAY_NORMAL);
+
+        //for debug to clear hs
+/*        prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = prefs.edit();
+        prefEditor.putInt("FirstPlace", 0);
+        prefEditor.putInt("SecondPlace", 0);
+        prefEditor.putInt("ThirdPlace", 0);
+        prefEditor.putInt("FourthPlace", 0);
+        prefEditor.putInt("FifthPlace", 0);
+        prefEditor.commit();*/
     }
+
+    //Gameover
+    Bitmap bm_GameOver = BitmapFactory.decodeResource(getResources(), R.drawable.gameover_overlay);
+    Rect Rect_Menu;
 
     public void startVibrate(){
         long pattern[] = {0, 50, 0};
@@ -179,6 +200,9 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     //Initialise all variables here
     public void surfaceCreated(SurfaceHolder surfaceHolder){
         if(!InitVars){
+            //Initialise font
+            font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Gemcut.otf");
+
             //Initialise background
             playScene_BG = new Background(bm_gamebg, screenWidth, screenHeight);
             playScene_BG.setScrollAmount(-5);
@@ -196,9 +220,11 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             Rect_MoveLeft = new Rect(0, buttonTop, bm_MoveLeft.getWidth(), buttonTop + bm_MoveLeft.getHeight());
             Rect_MoveRight = new Rect(screenWidth - bm_MoveRight.getWidth(), buttonTop,screenWidth, buttonTop + bm_MoveRight.getHeight());
             Rect_Laser = new Rect(screenWidth / 2 - bm_Synchro_icon.getWidth() / 2, buttonTop, screenWidth / 2 - bm_Synchro_icon.getWidth() / 2 + bm_Synchro_icon.getWidth(), buttonTop + bm_Synchro_icon.getHeight());
-            Rect_Pause = new Rect(screenWidth - 200, screenHeight / 3, screenWidth - 200 + bm_Pause.getWidth(), screenHeight / 3 + bm_Pause.getHeight());
-            Rect_Play = new Rect(screenWidth - 200, screenHeight / 3, screenWidth - 200 + bm_Play.getWidth(), screenHeight / 3 +  bm_Play.getHeight());
-            Rect_Back = new Rect(screenWidth - 200, screenHeight / 2, screenWidth - 200 + bm_Back.getWidth(), screenHeight / 2  +  bm_Back.getHeight());
+            Rect_Pause = new Rect(screenWidth - 195, screenHeight / 2, screenWidth - 200 + bm_Pause.getWidth(), screenHeight / 2 + bm_Pause.getHeight());
+            Rect_Play = new Rect(screenWidth - 195, screenHeight / 2, screenWidth - 200 + bm_Play.getWidth(), screenHeight / 2 +  bm_Play.getHeight());
+            Rect_Back = new Rect(screenWidth - 200, screenHeight / 3, screenWidth - 200 + bm_Back.getWidth(), screenHeight / 3  +  bm_Back.getHeight());
+            Rect_Menu = new Rect(screenWidth / 3 - bm_Back.getWidth(), screenHeight /2 + 100, screenWidth / 3, screenHeight / 2 + 100 + bm_Back.getHeight());
+
             //Set to true to allow init only when created
             InitVars = true;
         }
@@ -231,6 +257,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         bm_Play.recycle();
         bm_Pause.recycle();
         bm_gamebg.recycle();
+        bm_GameOver.recycle();
         Spr_RedTile.recycle();
         Spr_BlueTile.recycle();
         Spr_GreenTile.recycle();
@@ -250,6 +277,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         bm_Play = null;
         bm_Pause = null;
         bm_gamebg = null;
+        bm_GameOver = null;
         Spr_RedTile = null;
         Spr_BlueTile = null;
         Spr_GreenTile = null;
@@ -431,6 +459,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             paint.setARGB(255, 255, 255, 255);
             paint.setStrokeWidth(100);
             paint.setTextSize(size);
+            paint.setTypeface(font);
             newCanvas.drawText(text, posX, posY, paint);
         }
     }
@@ -474,8 +503,10 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     SoundManager.SFX.start();
                 }
                 //Back to menu
-                if (touchX >= Rect_Back.left && touchX <= Rect_Back.right
+                if ((touchX >= Rect_Back.left && touchX <= Rect_Back.right
                         && touchY >= Rect_Back.top && touchY <= Rect_Back.bottom)
+                        || (touchX >= Rect_Menu.left && touchX <= Rect_Menu.right
+                        && touchY >= Rect_Menu.top && touchY <= Rect_Menu.bottom))
                 {
                     gameThread.pauseThread(true);
                     intent.setClass(getContext(), Mainmenu.class);
@@ -493,6 +524,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public void update(float fps){
+
         if(!player.getDead())
         {
             this.FPS = fps;
@@ -502,17 +534,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         }
         else{
             CheckHighScore(player.getScore());
-            gameThread.pauseThread(true);
-            intent.setClass(getContext(), Mainmenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            SoundManager.BGM.stop();
-            getContext().startActivity(intent);
-            SoundManager.SFX.start();
-/*            //TODO: Alert to display beat high score
-            if(CheckHighScore(player.getScore()))
-            {
-
-            }*/
         }
     }
 
@@ -596,55 +617,47 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public boolean checkCollide(Entity a, Entity b){
-        if(Rect.intersects(a.getDimensions(), b.getDimensions())) {
-            return true;
-        }
-        else
-            return false;
+        return Rect.intersects(a.getDimensions(), b.getDimensions());
     }
 
     public boolean InsideTile(Entity a, Entity b){
-        if(a.getRight() + a.getVelocity().x  > b.getLeft() &&
-                (a.getBottom() + a.getVelocity().y * 10) > (b.getTop() + (b.getScale().y / 2))){
-            return true;
-        }
-        return false;
+        return a.getRight() + a.getVelocity().x > b.getLeft() &&
+                (a.getBottom() + a.getVelocity().y * 10) > (b.getTop() + (b.getScale().y / 2));
     }
 
-    public boolean CheckHighScore(int score){
-        for(int i = 0; i < HighscoreManager.HighScore_List.length - 1; ++i)
-        {
-            //Replaces the lowest score if won
-            if(score > HighscoreManager.HighScore_List[4])
-            {
-                //Replaces the lowest score
-                HighscoreManager.HighScore_List[4] = score;
+    public void CheckHighScore(int score){
 
-                //Sorts the score
-                for(int j = HighscoreManager.HighScore_List.length -1; j > 0 ; --j){
-                    if(HighscoreManager.HighScore_List[j] > HighscoreManager.HighScore_List[j-1]){
-                        int temp = HighscoreManager.HighScore_List[j];
-                        HighscoreManager.HighScore_List[j] = HighscoreManager.HighScore_List[j-1];
-                        HighscoreManager.HighScore_List[j-1] = temp;
+        if(checkHighScore) {
+            for (int i = 0; i < HighscoreManager.HighScore_List.length - 1; ++i) {
+                //Replaces the lowest score if won
+                if (score > HighscoreManager.HighScore_List[4] && checkHighScore) {
+                    newHighScore = true;
+                    //Replaces the lowest score
+                    HighscoreManager.HighScore_List[4] = score;
+
+                    //Sorts the score
+                    for (int j = HighscoreManager.HighScore_List.length - 1; j > 0; --j) {
+                        if (HighscoreManager.HighScore_List[j] > HighscoreManager.HighScore_List[j - 1]) {
+                            int temp = HighscoreManager.HighScore_List[j];
+                            HighscoreManager.HighScore_List[j] = HighscoreManager.HighScore_List[j - 1];
+                            HighscoreManager.HighScore_List[j - 1] = temp;
+                        }
                     }
+
+                    checkHighScore = false;
+                    //Saves the score
+                    prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor prefEditor = prefs.edit();
+                    prefEditor.putInt("FirstPlace", HighscoreManager.HighScore_List[0]);
+                    prefEditor.putInt("SecondPlace", HighscoreManager.HighScore_List[1]);
+                    prefEditor.putInt("ThirdPlace", HighscoreManager.HighScore_List[2]);
+                    prefEditor.putInt("FourthPlace", HighscoreManager.HighScore_List[3]);
+                    prefEditor.putInt("FifthPlace", HighscoreManager.HighScore_List[4]);
+                    prefEditor.commit();
                 }
-
-                //Saves the score
-                prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor prefEditor = prefs.edit();
-                prefEditor.putInt("FirstPlace", HighscoreManager.HighScore_List[0]);
-                prefEditor.putInt("SecondPlace", HighscoreManager.HighScore_List[1]);
-                prefEditor.putInt("ThirdPlace", HighscoreManager.HighScore_List[2]);
-                prefEditor.putInt("FourthPlace", HighscoreManager.HighScore_List[3]);
-                prefEditor.putInt("FifthPlace", HighscoreManager.HighScore_List[4]);
-                prefEditor.commit();
-
-                return true;
             }
-            else
-                return false;
         }
-        return false;
+        checkHighScore = false;
     }
 
     //@Override
@@ -665,10 +678,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             //Player related
             player.draw(newCanvas);
 
-            if(player.getDead()){
-                renderTextOnScreen(newCanvas, "Game over", 300, screenHeight / 2, 100);
-            }
-
             //UI portion
             //Arrow Buttons
             newCanvas.drawBitmap(bm_MoveLeft, Rect_MoveLeft.left, Rect_MoveLeft.top, null);
@@ -682,19 +691,38 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 newCanvas.drawBitmap(bm_Synchro_icon_unready, Rect_Laser.left, Rect_Laser.top, null);
             }
 
-            if(isPaused){
-                newCanvas.drawBitmap(bm_Play, Rect_Play.left, Rect_Play.top, null);
-            }
-            else{
-                newCanvas.drawBitmap(bm_Pause, Rect_Pause.left, Rect_Pause.top, null);
-            }
-
-            newCanvas.drawBitmap(bm_Back, Rect_Back.left, Rect_Back.top, null);
-
             //Score, Multiplier, FPS
             renderTextOnScreen(newCanvas, "Score: " + player.getScore(), 50, 175, 80);
             renderTextOnScreen(newCanvas, "Multiplier: X" + player.getMultiplier() , 50, 100, 50);
             renderTextOnScreen(newCanvas, "FPS: " + (float)FPS, 0, 50, 25);
+
+            //Gameover overlay
+            if(player.getDead()){
+
+                newCanvas.drawBitmap(bm_GameOver, 150, screenHeight / 4, null);
+                newCanvas.drawBitmap(bm_Back, Rect_Menu.left, Rect_Menu.top, null);
+
+                renderTextOnScreen(newCanvas, "Game", screenWidth / 5 - 20, screenHeight / 3 + 50, 200);
+                renderTextOnScreen(newCanvas, "Over!", screenWidth / 5 - 20, screenHeight / 3 + 200, 200);
+                renderTextOnScreen(newCanvas, " - Back to menu", Rect_Menu.right, Rect_Menu.bottom - 50, 80);
+
+                if(newHighScore) {
+                    renderTextOnScreen(newCanvas, "New High Score: " + player.getScore() + "!", Rect_Menu.left, Rect_Menu.top - 50, 80);
+                }
+                else{
+                    renderTextOnScreen(newCanvas, "Final Score: " + player.getScore(), Rect_Menu.left, Rect_Menu.top - 50, 80);
+                }
+            }
+            else{
+                if(isPaused){
+                    newCanvas.drawBitmap(bm_Play, Rect_Play.left, Rect_Play.top, null);
+                }
+                else{
+                    newCanvas.drawBitmap(bm_Pause, Rect_Pause.left, Rect_Pause.top, null);
+                }
+                newCanvas.drawBitmap(bm_Back, Rect_Back.left, Rect_Back.top, null);
+            }
+
         }
     }
 

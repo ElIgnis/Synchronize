@@ -10,7 +10,7 @@
     android:background="@drawable/background"
     tools:context=".Mainmenu">
 
-    <TextView android:id="@+id/text"
+    <TextView android:id="@+id/text_title2"
         android:text="Synchronize"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
@@ -34,7 +34,7 @@
 
         android:textAllCaps="false"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/text"
+        android:layout_below="@+id/text_title2"
         android:layout_centerHorizontal="true" />
 
     <Button
