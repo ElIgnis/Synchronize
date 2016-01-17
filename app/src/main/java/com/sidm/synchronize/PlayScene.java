@@ -480,20 +480,23 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                //Left arrow
-                if (touchX >= Rect_MoveLeft.left && touchX <= Rect_MoveLeft.right
-                        && touchY >= Rect_MoveLeft.top && touchY <= Rect_MoveLeft.bottom) {
-                    player.setMoveLeft(true);
-                }
-                //Right arrow
-                if (touchX >= Rect_MoveRight.left && touchX <= Rect_MoveRight.right
-                        && touchY >= Rect_MoveRight.top && touchY <= Rect_MoveRight.bottom) {
-                    player.setMoveRight(true);
-                }
-                //Laser
-                if (touchX >= Rect_Laser.left && touchX <= Rect_Laser.right
-                        && touchY >= Rect_Laser.top && touchY <= Rect_Laser.bottom) {
-                    player.useSynchro();
+                if(m_iGameMode == 0)
+                {
+                    //Left arrow
+                    if (touchX >= Rect_MoveLeft.left && touchX <= Rect_MoveLeft.right
+                            && touchY >= Rect_MoveLeft.top && touchY <= Rect_MoveLeft.bottom) {
+                        player.setMoveLeft(true);
+                    }
+                    //Right arrow
+                    if (touchX >= Rect_MoveRight.left && touchX <= Rect_MoveRight.right
+                            && touchY >= Rect_MoveRight.top && touchY <= Rect_MoveRight.bottom) {
+                        player.setMoveRight(true);
+                    }
+                    //Powerup
+                    if (touchX >= Rect_Laser.left && touchX <= Rect_Laser.right
+                            && touchY >= Rect_Laser.top && touchY <= Rect_Laser.bottom) {
+                        player.useSynchro();
+                    }
                 }
                 //Pause
                 if (touchX >= Rect_Pause.left && touchX <= Rect_Pause.right
@@ -538,6 +541,25 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         {
             this.FPS = fps;
             playScene_BG.update();
+
+            if(m_iGameMode == 1){
+                //Left tilt
+                if(values[0] > 1.0){
+                    player.setMoveLeft(true);
+                }
+                else if(values[0] < -1.0){
+                    player.setMoveRight(true);
+                }
+                else
+                {
+                    player.setMoveLeft(false);
+                    player.setMoveRight(false);
+                }
+                if(values[1] < 0.5){
+                    player.useSynchro();
+                }
+            }
+
             player.update();
             updateTiles();
         }
@@ -691,16 +713,19 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             player.draw(newCanvas);
 
             //UI portion
-            //Arrow Buttons
-            newCanvas.drawBitmap(bm_MoveLeft, Rect_MoveLeft.left, Rect_MoveLeft.top, null);
-            newCanvas.drawBitmap(bm_MoveRight, Rect_MoveRight.left, Rect_MoveRight.top, null);
+            if(m_iGameMode == 0)
+            {
+                //Arrow Buttons
+                newCanvas.drawBitmap(bm_MoveLeft, Rect_MoveLeft.left, Rect_MoveLeft.top, null);
+                newCanvas.drawBitmap(bm_MoveRight, Rect_MoveRight.left, Rect_MoveRight.top, null);
 
-            //Laser Button
-            if(player.getSynchroReady()){
-                newCanvas.drawBitmap(bm_Synchro_icon, Rect_Laser.left, Rect_Laser.top, null);
-            }
-            else{
-                newCanvas.drawBitmap(bm_Synchro_icon_unready, Rect_Laser.left, Rect_Laser.top, null);
+                //Laser Button
+                if(player.getSynchroReady()){
+                    newCanvas.drawBitmap(bm_Synchro_icon, Rect_Laser.left, Rect_Laser.top, null);
+                }
+                else{
+                    newCanvas.drawBitmap(bm_Synchro_icon_unready, Rect_Laser.left, Rect_Laser.top, null);
+                }
             }
 
             //Score, Multiplier, FPS
@@ -735,6 +760,14 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 newCanvas.drawBitmap(bm_Back, Rect_Back.left, Rect_Back.top, null);
             }
 
+            //debug print
+            /*float x,y,z;
+            x = values[0];
+            y = values[1];
+            z = values[2];
+            renderTextOnScreen(newCanvas, String.valueOf(x), screenWidth - 200, 100, 100);
+            renderTextOnScreen(newCanvas, String.valueOf(y), screenWidth - 200, 200, 100);
+            renderTextOnScreen(newCanvas, String.valueOf(z), screenWidth - 200, 300, 100);*/
         }
     }
 
@@ -746,32 +779,5 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-    }
-
-    public void SensorMove(){
-        //Temp variables
-        float tempX, tempY;
-
-        tempX = player.getPosition().x + (values[1]  * ((System.currentTimeMillis() - lastTime)/1000 ));
-        tempY = player.getPosition().y + (values[0]  * ((System.currentTimeMillis() - lastTime)/1000 ));
-
-        if(tempX <= player.getSprite().getWidth()/2 || tempX >= screenWidth - player.getSprite().getWidth()/2)
-        {
-            if(tempY > player.getSprite().getHeight()/2 && tempY < screenHeight - player.getSprite().getHeight()/2)
-            {
-                player.setPosition(player.getPosition().x, (int)tempY);
-            }
-        }
-        else if(tempY <= player.getSprite().getHeight()/2 || tempX >= screenHeight - player.getSprite().getHeight()/2)
-        {
-            if(tempX > player.getSprite().getWidth()/2 && tempX < screenWidth - player.getSprite().getWidth()/2)
-            {
-                player.setPosition((int)tempX, player.getPosition().y);
-            }
-        }
-        else
-        {
-            player.setPosition((int)tempX, (int)tempY);
-        }
     }
 }

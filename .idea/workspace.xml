@@ -39,92 +39,47 @@
       <file leaf-file-name="PlayScene.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41407868">
-              <caret line="638" column="0" selection-start-line="638" selection-start-column="0" selection-end-line="638" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6128364">
+              <caret line="764" column="26" selection-start-line="764" selection-start-column="26" selection-end-line="764" selection-end-column="26" />
               <folding>
                 <element signature="method#setColor#0;class#PlayScene#0" expanded="false" />
                 <element signature="method#PlayScene#0;class#PlayScene#0" expanded="false" />
                 <element signature="method#startVibrate#0;class#PlayScene#0" expanded="false" />
+                <element signature="e#6149#6150#0" expanded="true" />
+                <element signature="e#6187#6188#0" expanded="true" />
                 <element signature="method#surfaceChanged#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#surfaceDestroyed#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#surfaceCreated#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#Exit#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#loadColouredImages#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#LoadPlayerSprites#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#RNG#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#GenerateTile#0;class#PlayScene#0" expanded="false" />
                 <element signature="e#15019#15027#0" expanded="false" />
-                <element signature="method#renderTextOnScreen#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#onTouchEvent#0;class#PlayScene#0" expanded="false" />
                 <element signature="method#update#0;class#PlayScene#0" expanded="false" />
                 <element signature="method#updateTiles#0;class#PlayScene#0" expanded="false" />
                 <element signature="method#checkCollide#0;class#PlayScene#0" expanded="false" />
                 <element signature="method#InsideTile#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#render#0;class#PlayScene#0" expanded="false" />
-                <element signature="e#28135#28147#0" expanded="false" />
-                <element signature="method#onAccuracyChanged#0;class#PlayScene#0" expanded="false" />
-                <element signature="method#SensorMove#0;class#PlayScene#0" expanded="false" />
+                <element signature="e#31553#31554#0" expanded="true" />
+                <element signature="e#31595#31596#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_mainmenu.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_mainmenu.xml">
-          <provider editor-type-id="text-editor">
+      <file leaf-file-name="PlayState.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayState.java">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="46" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
+              <caret line="61" column="21" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
               <folding />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer">
+        </entry>
+      </file>
+      <file leaf-file-name="activity_game_mode.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_mode.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.379311">
+              <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SoundManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/Game/SoundManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="33" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Splashpage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Splashpage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="56" column="103" selection-start-line="56" selection-start-column="103" selection-end-line="56" selection-end-column="103" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Options.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Options.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="132" column="12" selection-start-line="132" selection-start-column="12" selection-end-line="133" selection-end-column="99" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mainmenu.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Mainmenu.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="72" selection-start-line="40" selection-start-column="72" selection-end-line="40" selection-end-column="72" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
           </provider>
         </entry>
       </file>
@@ -1580,13 +1535,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Ranking.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_game_color.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_game_difficulty.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayState.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_help.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Help.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Splashpage.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Mainmenu.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayScene.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_mainmenu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayState.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_game_mode.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayScene.java" />
       </list>
     </option>
   </component>
@@ -1956,7 +1912,7 @@
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1992,11 +1948,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="145" />
+      <option name="time" value="148" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
-        <watch expression="SoundManager.SFX" language="JAVA" custom="" />
+        <watch expression="values" language="JAVA" custom="" />
       </configuration>
     </watches-manager>
   </component>
@@ -2009,25 +1965,16 @@
             <element signature="method#setColor#0;class#PlayScene#0" expanded="false" />
             <element signature="method#PlayScene#0;class#PlayScene#0" expanded="false" />
             <element signature="method#startVibrate#0;class#PlayScene#0" expanded="false" />
+            <element signature="e#6149#6150#0" expanded="true" />
+            <element signature="e#6187#6188#0" expanded="true" />
             <element signature="method#surfaceChanged#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#surfaceDestroyed#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#surfaceCreated#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#Exit#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#loadColouredImages#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#LoadPlayerSprites#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#RNG#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#GenerateTile#0;class#PlayScene#0" expanded="false" />
             <element signature="e#15019#15027#0" expanded="false" />
-            <element signature="method#renderTextOnScreen#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#onTouchEvent#0;class#PlayScene#0" expanded="false" />
             <element signature="method#update#0;class#PlayScene#0" expanded="false" />
             <element signature="method#updateTiles#0;class#PlayScene#0" expanded="false" />
             <element signature="method#checkCollide#0;class#PlayScene#0" expanded="false" />
             <element signature="method#InsideTile#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#render#0;class#PlayScene#0" expanded="false" />
-            <element signature="e#28135#28147#0" expanded="false" />
-            <element signature="method#onAccuracyChanged#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#SensorMove#0;class#PlayScene#0" expanded="false" />
+            <element signature="e#31553#31554#0" expanded="true" />
+            <element signature="e#31595#31596#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2080,25 +2027,16 @@
             <element signature="method#setColor#0;class#PlayScene#0" expanded="false" />
             <element signature="method#PlayScene#0;class#PlayScene#0" expanded="false" />
             <element signature="method#startVibrate#0;class#PlayScene#0" expanded="false" />
+            <element signature="e#6149#6150#0" expanded="true" />
+            <element signature="e#6187#6188#0" expanded="true" />
             <element signature="method#surfaceChanged#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#surfaceDestroyed#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#surfaceCreated#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#Exit#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#loadColouredImages#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#LoadPlayerSprites#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#RNG#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#GenerateTile#0;class#PlayScene#0" expanded="false" />
             <element signature="e#15019#15027#0" expanded="false" />
-            <element signature="method#renderTextOnScreen#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#onTouchEvent#0;class#PlayScene#0" expanded="false" />
             <element signature="method#update#0;class#PlayScene#0" expanded="false" />
             <element signature="method#updateTiles#0;class#PlayScene#0" expanded="false" />
             <element signature="method#checkCollide#0;class#PlayScene#0" expanded="false" />
             <element signature="method#InsideTile#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#render#0;class#PlayScene#0" expanded="false" />
-            <element signature="e#28135#28147#0" expanded="false" />
-            <element signature="method#onAccuracyChanged#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#SensorMove#0;class#PlayScene#0" expanded="false" />
+            <element signature="e#31553#31554#0" expanded="true" />
+            <element signature="e#31595#31596#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2250,17 +2188,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_mode.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/Game/HighscoreManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2336,17 +2263,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splashpage.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36645964">
-          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_options.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="37.517242">
@@ -2379,36 +2295,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_color.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_difficulty.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="31" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="72" selection-start-line="60" selection-start-column="72" selection-end-line="60" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Help.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.673938">
@@ -2430,42 +2316,33 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Options.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="132" column="12" selection-start-line="132" selection-start-column="12" selection-end-line="133" selection-end-column="99" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Splashpage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="103" selection-start-line="56" selection-start-column="103" selection-end-line="56" selection-end-column="103" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Mainmenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="72" selection-start-line="40" selection-start-column="72" selection-end-line="40" selection-end-column="72" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/Game/SoundManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="33" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="33" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Options.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="58" selection-start-line="104" selection-start-column="58" selection-end-line="104" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_difficulty.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-30.724138">
+          <caret line="61" column="31" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_mainmenu.xml">
@@ -2479,33 +2356,85 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Mainmenu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.86328125">
+          <caret line="32" column="75" selection-start-line="32" selection-start-column="75" selection-end-line="32" selection-end-column="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splashpage.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73913044">
+          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_color.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/Splashpage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="21" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_game_mode.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.379311">
+          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sidm/synchronize/PlayScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41407868">
-          <caret line="638" column="0" selection-start-line="638" selection-start-column="0" selection-end-line="638" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6128364">
+          <caret line="764" column="26" selection-start-line="764" selection-start-column="26" selection-end-line="764" selection-end-column="26" />
           <folding>
             <element signature="method#setColor#0;class#PlayScene#0" expanded="false" />
             <element signature="method#PlayScene#0;class#PlayScene#0" expanded="false" />
             <element signature="method#startVibrate#0;class#PlayScene#0" expanded="false" />
+            <element signature="e#6149#6150#0" expanded="true" />
+            <element signature="e#6187#6188#0" expanded="true" />
             <element signature="method#surfaceChanged#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#surfaceDestroyed#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#surfaceCreated#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#Exit#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#loadColouredImages#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#LoadPlayerSprites#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#RNG#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#GenerateTile#0;class#PlayScene#0" expanded="false" />
             <element signature="e#15019#15027#0" expanded="false" />
-            <element signature="method#renderTextOnScreen#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#onTouchEvent#0;class#PlayScene#0" expanded="false" />
             <element signature="method#update#0;class#PlayScene#0" expanded="false" />
             <element signature="method#updateTiles#0;class#PlayScene#0" expanded="false" />
             <element signature="method#checkCollide#0;class#PlayScene#0" expanded="false" />
             <element signature="method#InsideTile#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#render#0;class#PlayScene#0" expanded="false" />
-            <element signature="e#28135#28147#0" expanded="false" />
-            <element signature="method#onAccuracyChanged#0;class#PlayScene#0" expanded="false" />
-            <element signature="method#SensorMove#0;class#PlayScene#0" expanded="false" />
+            <element signature="e#31553#31554#0" expanded="true" />
+            <element signature="e#31595#31596#0" expanded="true" />
           </folding>
         </state>
       </provider>

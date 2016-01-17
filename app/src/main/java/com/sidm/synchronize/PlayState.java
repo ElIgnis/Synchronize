@@ -47,9 +47,7 @@ public class PlayState extends Activity implements View.OnClickListener{
 
     //Game mode selection buttons
     Button btn_mode_normal;
-    Button btn_mode_random;
-    Button btn_mode_cycle;
-    Button btn_mode_cyclerandom;
+    Button btn_mode_accel;
     Button btn_mode_back;
 
     //Custom font
@@ -61,20 +59,28 @@ public class PlayState extends Activity implements View.OnClickListener{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide top bar
         font = Typeface.createFromAsset(getAssets(), "fonts/Gemcut.otf");
-        SelectDifficulty();
+        SelectMode();
         vib = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-
-
     }
 
     public void onClick(View v){
         //Back button
-        if(v == btn_back || v == btn_diff_back) {
+        if(v == btn_back || v == btn_mode_back) {
             //Set to go to next class
             intent.setClass(this, Mainmenu.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             SoundManager.BGM.stop();
             startActivity(intent);
+        }
+
+        //Game mode selection
+        if (v == btn_mode_normal) {
+            m_iGameMode = 0;
+            SelectDifficulty();
+        }
+        if (v == btn_mode_accel) {
+            m_iGameMode = 1;
+            SelectDifficulty();
         }
 
         //Difficulty selection
@@ -90,28 +96,9 @@ public class PlayState extends Activity implements View.OnClickListener{
             m_iDifficulty = 5;
             SelectColor();
         }
-
-        //Game mode selection
-/*        if (v == btn_mode_normal) {
-            m_iGameMode = 0;
-            SelectColor();
+        if(v == btn_diff_back){
+            SelectMode();
         }
-        if (v == btn_mode_random) {
-            m_iGameMode = 1;
-            SelectColor();
-        }
-        if (v == btn_mode_cycle) {
-            m_iGameMode = 2;
-            SelectColor();
-        }
-        if (v == btn_mode_cyclerandom) {
-            m_iGameMode = 3;
-            SelectColor();
-        }
-        if (v == btn_mode_back)
-        {
-            SelectDifficulty();
-        }*/
 
         //Player color selection
         if (v == btn_color_red) {
@@ -171,17 +158,25 @@ public class PlayState extends Activity implements View.OnClickListener{
         btn_mode_normal = (Button)findViewById(R.id.btn_mode_normal);
         btn_mode_normal.setOnClickListener(this);
 
-        btn_mode_random = (Button)findViewById(R.id.btn_mode_random);
-        btn_mode_random.setOnClickListener(this);
-
-        btn_mode_cycle = (Button)findViewById(R.id.btn_mode_cycle);
-        btn_mode_cycle.setOnClickListener(this);
-
-        btn_mode_cyclerandom = (Button)findViewById(R.id.btn_mode_cyclerandom);
-        btn_mode_cyclerandom.setOnClickListener(this);
+        btn_mode_accel = (Button)findViewById(R.id.btn_mode_accel);
+        btn_mode_accel.setOnClickListener(this);
 
         btn_mode_back = (Button)findViewById(R.id.btn_mode_back);
         btn_mode_back.setOnClickListener(this);
+
+        //Custom font
+        TextView txt_header = (TextView) findViewById(R.id.text_mode);
+        TextView txt_ctrl1 = (TextView) findViewById(R.id.text_mode_normal);
+        TextView txt_ctrl2 = (TextView) findViewById(R.id.text_mode_accel);
+        TextView txt_ctrl3 = (TextView) findViewById(R.id.text_mode_accel2);
+
+        txt_header.setTypeface(font);
+        txt_ctrl1.setTypeface(font);
+        txt_ctrl2.setTypeface(font);
+        txt_ctrl3.setTypeface(font);
+        btn_mode_normal.setTypeface(font);
+        btn_mode_accel.setTypeface(font);
+        btn_mode_back.setTypeface(font);
     }
 
     void SelectColor(){
