@@ -43,7 +43,7 @@ public class Splashpage extends Activity {
 
         prefs = getSharedPreferences("OptionsData", Context.MODE_PRIVATE);
 
-        SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
+        SoundManager.BGM = MediaPlayer.create(this, R.raw.menu_bgm);
         SoundManager.SFX = MediaPlayer.create(this, R.raw.click);
 
         //thread for displaying the Splash Screen
@@ -53,7 +53,8 @@ public class Splashpage extends Activity {
                 SoundManager.SFXVolume = prefs.getFloat("SFXValue", 100);
                 SoundManager.BGMVolume = prefs.getFloat("BGMValue", 100);
                 SoundManager.BGM.start();
-                SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
+                SoundManager.BGM.setVolume(SoundManager.BGMVolume / 100, SoundManager.BGMVolume / 100);
+                SoundManager.SFX.setVolume(SoundManager.SFXVolume / 100, SoundManager.SFXVolume / 100);
                 SoundManager.BGM.setLooping(true);
 
                 //if user taps screen

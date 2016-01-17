@@ -38,13 +38,14 @@ public class Mainmenu extends Activity implements View.OnClickListener {
         if(!SoundManager.BGM.isPlaying())
         {
             SoundManager.BGM.reset();
-            SoundManager.BGM = MediaPlayer.create(this, R.raw.bgm);
+            SoundManager.BGM = MediaPlayer.create(this, R.raw.menu_bgm);
             SoundManager.SFX = MediaPlayer.create(this, R.raw.click);
-            SoundManager.SFX.setVolume(SoundManager.SFXVolume, SoundManager.SFXVolume);
-            SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
             SoundManager.BGM.start();
             SoundManager.BGM.setLooping(true);
         }
+
+        SoundManager.BGM.setVolume(SoundManager.BGMVolume / 100, SoundManager.BGMVolume / 100);
+        SoundManager.SFX.setVolume(SoundManager.SFXVolume / 100, SoundManager.SFXVolume / 100);
 
         /*Define buttons*/
         //Start button

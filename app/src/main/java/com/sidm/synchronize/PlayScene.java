@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -109,6 +110,9 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     //Custom font
     Typeface font;
 
+    //Sound
+    MediaPlayer SFX_Tilebreak, SFX_Gameover;
+
     //Default constructor to take in context from PlayState
     public PlayScene(Context context) {
         super(context);
@@ -135,11 +139,17 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
         SoundManager.BGM.stop();
         SoundManager.BGM.reset();
-        SoundManager.BGM = MediaPlayer.create(context, R.raw.background_music);
+        SoundManager.BGM = MediaPlayer.create(context, R.raw.game_bgm);
         SoundManager.BGM.setVolume(SoundManager.BGMVolume, SoundManager.BGMVolume);
         SoundManager.BGM.start();
         SoundManager.BGM.setLooping(true);
         SoundManager.SFX = MediaPlayer.create(context, R.raw.click);
+
+        SFX_Tilebreak = MediaPlayer.create(context, R.raw.tilebreak);
+        SFX_Tilebreak.setVolume(SoundManager.SFXVolume, SoundManager.SFXVolume);
+
+        SFX_Gameover = MediaPlayer.create(context, R.raw.gameover);
+        SFX_Gameover.setVolume(SoundManager.SFXVolume, SoundManager.SFXVolume);
 
         sensor = (SensorManager)getContext().getSystemService(Context.SENSOR_SERVICE);
         sensor.registerListener(this, sensor.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0), SensorManager.SENSOR_DELAY_NORMAL);
@@ -162,7 +172,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     public void startVibrate(){
         long pattern[] = {0, 50, 0};
         PlayState.vib.vibrate(pattern, -1);
-        //SoundManager.SFX.start();
     }
 
     public void stopVibrate(){
@@ -604,6 +613,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     if(tile_list.get(i).getColor() == player.getColor()) {
                         tile_list.get(i).setBreak(true);
                         startVibrate();
+                        SFX_Tilebreak.start();
                     }
                 }
                 break;
@@ -628,6 +638,8 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     public void CheckHighScore(int score){
 
         if(checkHighScore) {
+            SFX_Gameover.start();
+            SoundManager.BGM.stop();
             for (int i = 0; i < HighscoreManager.HighScore_List.length - 1; ++i) {
                 //Replaces the lowest score if won
                 if (score > HighscoreManager.HighScore_List[4] && checkHighScore) {

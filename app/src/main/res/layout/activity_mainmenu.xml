@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/btn_sound"
+        android:layout_marginTop="69dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -84,18 +84,6 @@
         android:layout_marginTop="35dp"
         android:layout_below="@+id/btn_ranking"
         android:layout_alignStart="@+id/btn_ranking" />
-
-    <Button
-        android:id="@+id/btn_sound"
-
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:background="@drawable/mutebutton"
-
-        android:textAllCaps="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
 
 
 </RelativeLayout>
