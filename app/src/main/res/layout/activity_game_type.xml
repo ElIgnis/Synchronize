@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="16dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="16dp"
+    android:background="@drawable/background"
+    tools:context=".PlayState">
+    <!--android:background="@drawable/gamescene"-->
+
+    <!--Normal button-->
+    <Button
+        android:id = "@+id/btn_type_classic"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Classic"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="180dp" />
+
+    <!--Accel button-->
+    <Button
+        android:id = "@+id/btn_type_splashy"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Splashy"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="330dp" />
+
+    <!--Back button-->
+    <Button
+        android:id = "@+id/btn_type_back"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/clickbutton"
+        android:text = "Back"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select Game Mode"
+        android:textColor="#FFFFFF"
+        android:id="@+id/text_type"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your typical game play ;)"
+        android:textColor="#FFFFFF"
+        android:id="@+id/text_type_classic"
+        android:layout_marginTop="250dp"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Player and tile color changes with time"
+        android:textColor="#FFFFFF"
+        android:id="@+id/text_type_splashy"
+        android:layout_marginTop="400dp"
+        android:layout_marginStart="20dp" />
+
+</RelativeLayout>

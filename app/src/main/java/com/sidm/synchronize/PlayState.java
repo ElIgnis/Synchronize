@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
+
 import Game.SoundManager;
 
 /*This class displays the game scene*/
@@ -27,6 +29,7 @@ public class PlayState extends Activity implements View.OnClickListener{
     private static int m_iDifficulty = 0;
     private static int m_iGameMode = 0;
     private static int m_iColor = 0;
+    private static int m_iGameType = 0;
 
     //Back button
     Button btn_back;
@@ -49,6 +52,11 @@ public class PlayState extends Activity implements View.OnClickListener{
     Button btn_mode_normal;
     Button btn_mode_accel;
     Button btn_mode_back;
+
+    //Game type selection
+    Button btn_type_classic;
+    Button btn_type_splashy;
+    Button btn_type_back;
 
     //Custom font
     Typeface font;
@@ -76,28 +84,65 @@ public class PlayState extends Activity implements View.OnClickListener{
         //Game mode selection
         if (v == btn_mode_normal) {
             m_iGameMode = 0;
-            SelectDifficulty();
+            SelectGameType();
+            //SelectDifficulty();
         }
         if (v == btn_mode_accel) {
             m_iGameMode = 1;
+            SelectGameType();
+            //SelectDifficulty();
+        }
+
+        //Game type selection
+        if (v == btn_type_classic){
+            m_iGameType = 0;
             SelectDifficulty();
+        }
+        if (v == btn_type_splashy){
+            m_iGameType = 1;
+            SelectDifficulty();
+        }
+        if (v == btn_type_back){
+            SelectMode();
         }
 
         //Difficulty selection
         if (v == btn_diff_easy) {
             m_iDifficulty = 3;
-            SelectColor();
+
+            //Classic mode proceed to color selection
+            if (m_iGameType == 0) {
+                SelectColor();
+            }
+            //Splashy mode starts game instantly
+            if (m_iGameType == 1){
+                InitGame();
+            }
         }
         if (v == btn_diff_normal) {
             m_iDifficulty = 4;
-            SelectColor();
+
+            if (m_iGameType == 0) {
+                SelectColor();
+            }
+            //Splashy mode starts game instantly
+            if (m_iGameType == 1){
+                InitGame();
+            }
         }
         if (v == btn_diff_hard) {
             m_iDifficulty = 5;
-            SelectColor();
+
+            if (m_iGameType == 0) {
+                SelectColor();
+            }
+            //Splashy mode starts game instantly
+            if (m_iGameType == 1){
+                InitGame();
+            }
         }
         if(v == btn_diff_back){
-            SelectMode();
+            SelectGameType();
         }
 
         //Player color selection
@@ -212,13 +257,50 @@ public class PlayState extends Activity implements View.OnClickListener{
         btn_color_back.setTypeface(font);
     }
 
+    void SelectGameType(){
+        setContentView(R.layout.activity_game_type);
+
+        btn_type_classic = (Button)findViewById(R.id.btn_type_classic);
+        btn_type_classic.setOnClickListener(this);
+
+        btn_type_splashy = (Button)findViewById(R.id.btn_type_splashy);
+        btn_type_splashy.setOnClickListener(this);
+
+        btn_type_back = (Button)findViewById(R.id.btn_type_back);
+        btn_type_back.setOnClickListener(this);
+
+        //Custom font
+        TextView txt_header = (TextView) findViewById(R.id.text_type);
+        TextView txt_ctrl1 = (TextView) findViewById(R.id.text_type_classic);
+        TextView txt_ctrl2 = (TextView) findViewById(R.id.text_type_splashy);
+
+        txt_header.setTypeface(font);
+        txt_ctrl1.setTypeface(font);
+        txt_ctrl2.setTypeface(font);
+
+        btn_type_classic.setTypeface(font);
+        btn_type_splashy.setTypeface(font);
+        btn_type_back.setTypeface(font);
+    }
+
     void InitGame(){
         //Show layout on screen(page == view)
         //v = getLayoutInflater().inflate(R.layout.activity_gameplay, null);
         playScene = new PlayScene(this);
         playScene.setDifficulty(m_iDifficulty);
         playScene.setGameMode(m_iGameMode);
-        playScene.setColor(m_iColor);
+        playScene.setGameType(m_iGameType);
+
+        if (m_iGameType == 0) {
+            playScene.setColor(m_iColor);
+        }
+        //Generate random number for Splashy mode
+        if (m_iGameType == 1){
+            Random rng = new Random();
+            int rngNumber = rng.nextInt(5) + 1;
+            playScene.setColor(rngNumber);
+        }
+
         setContentView(playScene);
 
         //addContentView(v, new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN));

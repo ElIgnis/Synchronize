@@ -26,6 +26,7 @@ import android.view.View;
 //Import other classes
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import Game.Background;
 import Game.Entity;
@@ -40,6 +41,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     public int m_iDifficulty;
     public int m_iGameMode;
     public int m_iPlayerColor;
+    public int m_iGameType;
 
     public void setDifficulty(int difficulty){
         this.m_iDifficulty = difficulty;
@@ -50,6 +52,8 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public void setColor(int color) {this.m_iPlayerColor = color;}
+
+    public void setGameType(int gameType){this.m_iGameType = gameType;}
 
     private boolean InitVars;
 
@@ -112,6 +116,12 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
     //Sound
     MediaPlayer SFX_Tilebreak, SFX_Gameover;
+
+    //Splashy Mode (Color Change)
+    private long colorChangeStartTime = System.currentTimeMillis();
+    private long tileElapsedTime = 0;
+    private long playerChangeStartTime = System.currentTimeMillis();
+    private long playerElapsedTime = 0;
 
     //Default constructor to take in context from PlayState
     public PlayScene(Context context) {
@@ -337,14 +347,14 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         }
     }
 
-    public void LoadPlayerSprites(){
+    public void LoadPlayerSprites() {
         player.InitSprite_Idle(Spr_Player_Idle, //Bitmap image
                 9, this.m_iPlayerColor,       //Num frames, Start color
                 1, true);   //Play speed, Repeat
 
         player.InitSprite_MoveLeft(Spr_Player_MoveLeft, //Bitmap image
                 9, this.m_iPlayerColor,       //Num frames, Start color
-                1, true);   //Play speed, Repeat
+               1, true);   //Play speed, Repeat
 
         player.InitSprite_MoveRight(Spr_Player_MoveRight, //Bitmap image
                 9, this.m_iPlayerColor,       //Num frames, Start color
@@ -462,6 +472,95 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         }
     }
 
+    public void changeColor (int numOfColumns){
+        int tileCount = 0;
+        for (int i = 0; i < tile_list.size()-1; ++i)
+        {
+            tileCount += 1;
+            boolean playerColor = false;
+
+            int m_iRNGResult = RNG();
+
+            if (m_iRNGResult == player.getColor()){
+                playerColor = true;
+            }
+
+            if (playerColor == false && (tileCount % numOfColumns == 0)){
+                switch (player.getColor()) {
+                    //Red color
+                    case 1:
+                        tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Green color
+                    case 2:
+                        tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Blue color
+                    case 3:
+                        tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //yellow color
+                    case 4:
+                        tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //purple color
+                    case 5:
+                        tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
+                                6, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else {
+                switch (m_iRNGResult) {
+                    //Red color
+                    case 1:
+                        tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
+                                numFrames, 1,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Green color
+                    case 2:
+                        tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
+                                numFrames, 2,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Blue color
+                    case 3:
+                        tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
+                                numFrames, 3,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Yellow color
+                    case 4:
+                        tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
+                                numFrames, 4,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Purple color
+                    case 5:
+                        tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
+                                numFrames, 5,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
     public void renderTextOnScreen(Canvas newCanvas, String text, int posX, int posY, int size){
         if(newCanvas != null && text.length() != 0) {
             Paint paint = new Paint();
@@ -542,6 +641,27 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             this.FPS = fps;
             playScene_BG.update();
 
+            //Splashy Mode (Color change)
+            if (m_iGameType == 1) {
+                tileElapsedTime = System.currentTimeMillis() - colorChangeStartTime;
+                playerElapsedTime = System.currentTimeMillis() - playerChangeStartTime;
+                //Change of tile color
+                if ((tileElapsedTime / 1000) > 2) {
+                    //Change tile color
+                    changeColor(m_iDifficulty);
+                    colorChangeStartTime = System.currentTimeMillis();
+                }
+                if ((playerElapsedTime / 1000) > 3){
+                    //Change player color
+                    int m_iRNG = RNG();
+                    player.setColor(m_iRNG);
+                    m_iPlayerColor = m_iRNG;
+                    loadColouredImages(m_iPlayerColor);
+                    LoadPlayerSprites();
+                    playerChangeStartTime = System.currentTimeMillis();
+                }
+            }
+            //
             if(m_iGameMode == 1){
                 //Left tilt
                 if(values[0] > 1.0){
@@ -559,7 +679,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     player.useSynchro();
                 }
             }
-
             player.update();
             updateTiles();
         }
@@ -729,7 +848,8 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             }
 
             //Score, Multiplier, FPS
-            renderTextOnScreen(newCanvas, "Score: " + player.getScore(), 50, 175, 80);
+            //renderTextOnScreen(newCanvas, "Score: " + player.getScore(), 50, 175, 80);
+            renderTextOnScreen(newCanvas, "pColor: " + player.getColor(), 50, 175, 80);
             renderTextOnScreen(newCanvas, "Multiplier: X" + player.getMultiplier() , 50, 100, 50);
             renderTextOnScreen(newCanvas, "FPS: " + (float)FPS, 0, 50, 25);
 
