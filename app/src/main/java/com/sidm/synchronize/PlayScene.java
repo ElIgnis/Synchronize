@@ -801,6 +801,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     //Saves the score
                     prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
                     SharedPreferences.Editor prefEditor = prefs.edit();
+                    prefEditor.putInt("CurrentScore", score);
                     prefEditor.putInt("FirstPlace", HighscoreManager.HighScore_List[0]);
                     prefEditor.putInt("SecondPlace", HighscoreManager.HighScore_List[1]);
                     prefEditor.putInt("ThirdPlace", HighscoreManager.HighScore_List[2]);
