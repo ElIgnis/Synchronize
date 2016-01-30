@@ -664,10 +664,10 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             //
             if(m_iGameMode == 1){
                 //Left tilt
-                if(values[0] > 1.0){
+                if(values[0] > 0.5){
                     player.setMoveLeft(true);
                 }
-                else if(values[0] < -1.0){
+                else if(values[0] < -0.5){
                     player.setMoveRight(true);
                 }
                 else
