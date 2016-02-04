@@ -503,22 +503,61 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public void changeColor (int numOfColumns){
-
+        Random rng = new Random();
         //For each row
         for (int i = 0; i < (tile_list.size()-1); i+=m_iDifficulty) {
+            // Set color present to false per row
             boolean colorPresent = false;
-
-            int m_iRNGResult = RNG();
-            int tileToChange = RandomPlayerTile();
-
+            // Randomize the tile to change per row
+            int tileToChange = rng.nextInt(m_iDifficulty);
+            // For each column
             for (int j = 0; j < numOfColumns; j++)
             {
+                // Color to change for each tile
+                int m_iRNGResult = RNG();
+                // Check if player color is present for this row
                 if (m_iRNGResult == player.getColor())
                 {
                     colorPresent = true;
                 }
-            }
 
+                // Change the tile color
+                switch (m_iRNGResult) {
+                    //Red color
+                    case 1:
+                        tile_list.get(i+j).InitSprite(Spr_RedTile, //Bitmap image
+                                numFrames, 1,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Green color
+                    case 2:
+                        tile_list.get(i+j).InitSprite(Spr_GreenTile, //Bitmap image
+                                numFrames, 2,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Blue color
+                    case 3:
+                        tile_list.get(i+j).InitSprite(Spr_BlueTile, //Bitmap image
+                                numFrames, 3,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Yellow color
+                    case 4:
+                        tile_list.get(i+j).InitSprite(Spr_YellowTile, //Bitmap image
+                                numFrames, 4,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Purple color
+                    case 5:
+                        tile_list.get(i+j).InitSprite(Spr_PurpleTile, //Bitmap image
+                                numFrames, 5,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // If player color isn't present for this row, change a tile to the player's color
             if (colorPresent == false) {
                 switch (player.getColor()) {
                     //Red color
@@ -549,41 +588,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     case 5:
                         tile_list.get(i+tileToChange).InitSprite(Spr_PurpleTile, //Bitmap image
                                 6, player.getColor(),       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                switch (m_iRNGResult) {
-                    //Red color
-                    case 1:
-                        tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
-                                numFrames, 1,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Green color
-                    case 2:
-                        tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
-                                numFrames, 2,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Blue color
-                    case 3:
-                        tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
-                                numFrames, 3,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Yellow color
-                    case 4:
-                        tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
-                                numFrames, 4,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Purple color
-                    case 5:
-                        tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
-                                numFrames, 5,       //Num frames, Start color
                                 playSpeed, true);   //Play speed, Repeat
                         break;
                     default:
