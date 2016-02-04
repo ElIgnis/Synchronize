@@ -504,13 +504,12 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
     public void changeColor (int numOfColumns){
 
-        int tileCount = 0;
-
         //For each row
         for (int i = 0; i < (tile_list.size()-1); i+=m_iDifficulty) {
             boolean colorPresent = false;
 
             int m_iRNGResult = RNG();
+            int tileToChange = RandomPlayerTile();
 
             for (int j = 0; j < numOfColumns; j++)
             {
@@ -518,77 +517,77 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 {
                     colorPresent = true;
                 }
+            }
 
-                if (colorPresent == false) {
-                    switch (player.getColor()) {
-                        //Red color
-                        case 1:
-                            tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
-                                    numFrames, player.getColor(),       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //Green color
-                        case 2:
-                            tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
-                                    numFrames, player.getColor(),       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //Blue color
-                        case 3:
-                            tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
-                                    numFrames, player.getColor(),       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //yellow color
-                        case 4:
-                            tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
-                                    numFrames, player.getColor(),       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //purple color
-                        case 5:
-                            tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
-                                    6, player.getColor(),       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        default:
-                            break;
-                    }
-                } else {
-                    switch (m_iRNGResult) {
-                        //Red color
-                        case 1:
-                            tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
-                                    numFrames, 1,       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //Green color
-                        case 2:
-                            tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
-                                    numFrames, 2,       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //Blue color
-                        case 3:
-                            tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
-                                    numFrames, 3,       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //Yellow color
-                        case 4:
-                            tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
-                                    numFrames, 4,       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        //Purple color
-                        case 5:
-                            tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
-                                    numFrames, 5,       //Num frames, Start color
-                                    playSpeed, true);   //Play speed, Repeat
-                            break;
-                        default:
-                            break;
-                    }
+            if (colorPresent == false) {
+                switch (player.getColor()) {
+                    //Red color
+                    case 1:
+                        tile_list.get(i+tileToChange).InitSprite(Spr_RedTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Green color
+                    case 2:
+                        tile_list.get(i+tileToChange).InitSprite(Spr_GreenTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Blue color
+                    case 3:
+                        tile_list.get(i+tileToChange).InitSprite(Spr_BlueTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //yellow color
+                    case 4:
+                        tile_list.get(i+tileToChange).InitSprite(Spr_YellowTile, //Bitmap image
+                                numFrames, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //purple color
+                    case 5:
+                        tile_list.get(i+tileToChange).InitSprite(Spr_PurpleTile, //Bitmap image
+                                6, player.getColor(),       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (m_iRNGResult) {
+                    //Red color
+                    case 1:
+                        tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
+                                numFrames, 1,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Green color
+                    case 2:
+                        tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
+                                numFrames, 2,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Blue color
+                    case 3:
+                        tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
+                                numFrames, 3,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Yellow color
+                    case 4:
+                        tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
+                                numFrames, 4,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    //Purple color
+                    case 5:
+                        tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
+                                numFrames, 5,       //Num frames, Start color
+                                playSpeed, true);   //Play speed, Repeat
+                        break;
+                    default:
+                        break;
                 }
             }
         }
