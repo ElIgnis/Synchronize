@@ -144,7 +144,7 @@ public class Player extends Entity{
 
     public void addScore(int addAmt){
         this.m_iScore += addAmt * m_iMultiplier;
-        ++m_iMultCounter;
+        m_iMultCounter += addAmt;
     }
 
     public boolean useSynchro(){

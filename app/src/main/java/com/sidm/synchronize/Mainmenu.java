@@ -89,7 +89,7 @@ public class Mainmenu extends FragmentActivity implements View.OnClickListener {
 
         }*/
 
-        prefs = getSharedPreferences("CurrentScore", Context.MODE_PRIVATE);
+        prefs = getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
 
         highscore = prefs.getInt("CurrentScore", 0);
 
@@ -183,10 +183,12 @@ public class Mainmenu extends FragmentActivity implements View.OnClickListener {
         if(Profile.getCurrentProfile() != null){
             btn_sharescore.setVisibility(View.VISIBLE);
             fb_prof_pic.setProfileId(Profile.getCurrentProfile().getId());
+            loggedin = true;
         }
         else{
             btn_sharescore.setVisibility(View.INVISIBLE);
             fb_prof_pic.setProfileId("");
+            loggedin = false;
         }
 
 /*        if(loggedin){
@@ -248,7 +250,7 @@ public class Mainmenu extends FragmentActivity implements View.OnClickListener {
             }*/
 
         }
-        else if (v == btn_sharescore && loggedin) {
+        else if (v == btn_sharescore) {
             btn_sharescore.setOnClickListener(new View.OnClickListener() {
 
                 @Override

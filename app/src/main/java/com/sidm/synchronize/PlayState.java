@@ -285,7 +285,6 @@ public class PlayState extends Activity implements View.OnClickListener{
 
     void InitGame(){
         //Show layout on screen(page == view)
-        //v = getLayoutInflater().inflate(R.layout.activity_gameplay, null);
         playScene = new PlayScene(this);
         playScene.setDifficulty(m_iDifficulty);
         playScene.setGameMode(m_iGameMode);
@@ -302,10 +301,6 @@ public class PlayState extends Activity implements View.OnClickListener{
         }
 
         setContentView(playScene);
-
-        //addContentView(v, new WindowManager.LayoutParams(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN));
-        //btn_back = (Button) findViewById(R.id.btn_back);
-        //btn_back.setOnClickListener(this);
     }
 
     protected void onPause(){super.onPause();}

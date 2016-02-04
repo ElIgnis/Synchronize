@@ -66,6 +66,8 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     private GameThread gameThread;
     private Background playScene_BG;
     Bitmap bm_gamebg = BitmapFactory.decodeResource(getResources(), R.drawable.game_bg);
+    Bitmap bm_pausebg = BitmapFactory.decodeResource(getResources(), R.drawable.pause_overlay);
+
     private boolean isPaused, newHighScore, checkHighScore;
 
     //Rect for buttons
@@ -116,6 +118,10 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
     //Sound
     MediaPlayer SFX_Tilebreak, SFX_Gameover;
+
+    //Random
+    int randRepeatCount = 0;
+    int prevRandNum;
 
     //Splashy Mode (Color Change)
     private long colorChangeStartTime = System.currentTimeMillis();
@@ -241,7 +247,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             Rect_Laser = new Rect(screenWidth / 2 - bm_Synchro_icon.getWidth() / 2, buttonTop, screenWidth / 2 - bm_Synchro_icon.getWidth() / 2 + bm_Synchro_icon.getWidth(), buttonTop + bm_Synchro_icon.getHeight());
             Rect_Pause = new Rect(screenWidth - 195, screenHeight / 2, screenWidth - 200 + bm_Pause.getWidth(), screenHeight / 2 + bm_Pause.getHeight());
             Rect_Play = new Rect(screenWidth - 195, screenHeight / 2, screenWidth - 200 + bm_Play.getWidth(), screenHeight / 2 +  bm_Play.getHeight());
-            Rect_Back = new Rect(screenWidth - 200, screenHeight / 3, screenWidth - 200 + bm_Back.getWidth(), screenHeight / 3  +  bm_Back.getHeight());
+            Rect_Back = new Rect(screenWidth - 200, 0, screenWidth - 200 + bm_Back.getWidth(), bm_Back.getHeight());
             Rect_Menu = new Rect(screenWidth / 3 - bm_Back.getWidth(), screenHeight /2 + 100, screenWidth / 3, screenHeight / 2 + 100 + bm_Back.getHeight());
 
             //Set to true to allow init only when created
@@ -276,6 +282,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         bm_Play.recycle();
         bm_Pause.recycle();
         bm_gamebg.recycle();
+        bm_pausebg.recycle();
         bm_GameOver.recycle();
         Spr_RedTile.recycle();
         Spr_BlueTile.recycle();
@@ -296,6 +303,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         bm_Play = null;
         bm_Pause = null;
         bm_gamebg = null;
+        bm_pausebg = null;
         bm_GameOver = null;
         Spr_RedTile = null;
         Spr_BlueTile = null;
@@ -365,16 +373,38 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 1, true);   //Play speed, Repeat
     }
 
+    //Random the type of tiles to spawn
     public int RNG(){
         Random rng = new Random();
         int rngNumber = rng.nextInt(5) + 1;
         return rngNumber;
     }
 
+    //Random the column to spawn the player's tiles
+    public int RandomPlayerTile(){
+        Random rng = new Random();
+        int RNG_PlayerTile = rng.nextInt(m_iDifficulty - 1) + randRepeatCount;
+        return RNG_PlayerTile;
+    }
+
     public void GenerateTile(int numRows, int numCols, int startY){
         //Creates 5x3 tiles for the game
         for(int rows = 0; rows < numRows; ++rows) {
             //Resets matching color every row
+            int m_iRNG_PlayerTile = RandomPlayerTile();
+
+            //Random same number counter after new number is generated
+            if(m_iRNG_PlayerTile == prevRandNum){
+                randRepeatCount++;
+            }
+
+            //Re-random
+            if(randRepeatCount > 0){
+                m_iRNG_PlayerTile = RandomPlayerTile();
+                randRepeatCount = 0;
+            }
+
+            prevRandNum = m_iRNG_PlayerTile;
             boolean matchingColor = false;
             for (int cols = 0; cols < numCols; ++cols) {
 
@@ -387,7 +417,7 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 Tile tile = new Tile(cols * screenWidth / numCols, startY + (screenHeight / 4) * rows, screenWidth / numCols, 50);
 
                 //If at the last column there are no matching colors
-                if (cols == numCols - 1 && matchingColor == false) {
+                if(m_iRNG_PlayerTile == cols) {
 
                     //Colors
                     //1 - Red
@@ -472,21 +502,22 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         }
     }
 
-    public void changeColor (int numOfColumns){
+    public void changeColor (int numOfColumns, int PlayerColor){
         int tileCount = 0;
+        boolean checkPlayerColor = false;
         for (int i = 0; i < tile_list.size()-1; ++i)
         {
             tileCount += 1;
-            boolean playerColor = false;
 
             int m_iRNGResult = RNG();
 
-            if (m_iRNGResult == player.getColor()){
-                playerColor = true;
+            if (m_iRNGResult == PlayerColor)
+            {
+                checkPlayerColor = true;
             }
 
-            if (playerColor == false && (tileCount % numOfColumns == 0)){
-                switch (player.getColor()) {
+            if (checkPlayerColor == false && (tileCount % numOfColumns == 0)){
+                switch (PlayerColor) {
                     //Red color
                     case 1:
                         tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
@@ -557,6 +588,12 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     default:
                         break;
                 }
+            }
+
+            // Set back to false for every row
+            if (tileCount % numOfColumns == 0)
+            {
+                checkPlayerColor = false;
             }
         }
     }
@@ -635,7 +672,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public void update(float fps){
-
         if(!player.getDead())
         {
             this.FPS = fps;
@@ -646,9 +682,9 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 tileElapsedTime = System.currentTimeMillis() - colorChangeStartTime;
                 playerElapsedTime = System.currentTimeMillis() - playerChangeStartTime;
                 //Change of tile color
-                if ((tileElapsedTime / 1000) > 2) {
+                if ((tileElapsedTime / 1000) > 1) {
                     //Change tile color
-                    changeColor(m_iDifficulty);
+                    changeColor(m_iDifficulty, player.getColor());
                     colorChangeStartTime = System.currentTimeMillis();
                 }
                 if ((playerElapsedTime / 1000) > 3){
@@ -659,15 +695,17 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     loadColouredImages(m_iPlayerColor);
                     LoadPlayerSprites();
                     playerChangeStartTime = System.currentTimeMillis();
+                    changeColor(m_iDifficulty, m_iRNG);
+                    colorChangeStartTime = System.currentTimeMillis();
                 }
             }
-            //
+            //Accelerometer gameplay
             if(m_iGameMode == 1){
                 //Left tilt
                 if(values[0] > 0.5){
                     player.setMoveLeft(true);
                 }
-                else if(values[0] < -0.5){
+                else if(values[0] < -0.5 ){
                     player.setMoveRight(true);
                 }
                 else
@@ -706,7 +744,18 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             {
                 tile_list.remove(i);
                 if(player.getDead() == false){
-                    player.addScore(1);
+
+                    switch(m_iGameMode)
+                    {
+                        case 0:
+                            player.addScore(1);
+                            break;
+                        case 1:
+                            player.addScore(2);
+                            break;
+                        default:
+                            break;
+                    }
                     continue;
                 }
             }
@@ -733,9 +782,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
 
         //Update list of tiles
         for(int i = 0; i < tile_list.size(); ++i) {
-            //Run distance check test
-/*            int dist = tile_list.get(i).getPosition().y - player.getPosition().y;
-            int maxDist = player.getScale().y + player.getVelocity().y + tile_list.get(i).getScale().y;*/
 
             //Run collision test
             if (checkCollide(player, tile_list.get(i))) {
@@ -760,10 +806,6 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                 break;
             }
             player.setFall(true);
-            //Dont check against tiles that are way below
-/*            if(dist > maxDist) {
-                //break;
-            }*/
         }
     }
 
@@ -781,6 +823,10 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         if(checkHighScore) {
             SFX_Gameover.start();
             SoundManager.BGM.stop();
+            //Saves the score
+            prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefEditor = prefs.edit();
+
             for (int i = 0; i < HighscoreManager.HighScore_List.length - 1; ++i) {
                 //Replaces the lowest score if won
                 if (score > HighscoreManager.HighScore_List[4] && checkHighScore) {
@@ -798,17 +844,18 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     }
 
                     checkHighScore = false;
-                    //Saves the score
-                    prefs = getContext().getSharedPreferences("HighscoreData", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor prefEditor = prefs.edit();
-                    prefEditor.putInt("CurrentScore", score);
+
                     prefEditor.putInt("FirstPlace", HighscoreManager.HighScore_List[0]);
                     prefEditor.putInt("SecondPlace", HighscoreManager.HighScore_List[1]);
                     prefEditor.putInt("ThirdPlace", HighscoreManager.HighScore_List[2]);
                     prefEditor.putInt("FourthPlace", HighscoreManager.HighScore_List[3]);
                     prefEditor.putInt("FifthPlace", HighscoreManager.HighScore_List[4]);
-                    prefEditor.commit();
                 }
+                //Did not beat highs core
+                else {
+                    prefEditor.putInt("CurrentScore", score);
+                }
+                prefEditor.commit();
             }
         }
         checkHighScore = false;
@@ -849,8 +896,8 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             }
 
             //Score, Multiplier, FPS
-            //renderTextOnScreen(newCanvas, "Score: " + player.getScore(), 50, 175, 80);
-            renderTextOnScreen(newCanvas, "pColor: " + player.getColor(), 50, 175, 80);
+            renderTextOnScreen(newCanvas, "Score: " + player.getScore(), 50, 175, 80);
+            //renderTextOnScreen(newCanvas, "pColor: " + player.getColor(), 50, 175, 80);
             renderTextOnScreen(newCanvas, "Multiplier: X" + player.getMultiplier() , 50, 100, 50);
             renderTextOnScreen(newCanvas, "FPS: " + (float)FPS, 0, 50, 25);
 
@@ -873,7 +920,9 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
             }
             else{
                 if(isPaused){
+                    newCanvas.drawBitmap(bm_pausebg, 0, 0, null);
                     newCanvas.drawBitmap(bm_Play, Rect_Play.left, Rect_Play.top, null);
+                    renderTextOnScreen(newCanvas, "Game Paused", screenWidth / 3, screenHeight / 2, 80);
                 }
                 else{
                     newCanvas.drawBitmap(bm_Pause, Rect_Pause.left, Rect_Pause.top, null);
