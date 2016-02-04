@@ -387,6 +387,12 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
         return RNG_PlayerTile;
     }
 
+    public int TileToChange(){
+        Random rng = new Random();
+        int RNG_PlayerTile = rng.nextInt(m_iDifficulty );
+        return RNG_PlayerTile;
+    }
+
     public void GenerateTile(int numRows, int numCols, int startY){
         //Creates 5x3 tiles for the game
         for(int rows = 0; rows < numRows; ++rows) {
@@ -503,96 +509,53 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
     }
 
     public void changeColor (int numOfColumns){
-        Random rng = new Random();
-        //For each row
-        for (int i = 0; i < (tile_list.size()-1); i+=m_iDifficulty) {
-            // Set color present to false per row
-            boolean colorPresent = false;
-            // Randomize the tile to change per row
-            int tileToChange = rng.nextInt(m_iDifficulty);
-            // For each column
-            for (int j = 0; j < numOfColumns; j++)
-            {
-                // Color to change for each tile
-                int m_iRNGResult = RNG();
-                // Check if player color is present for this row
-                if (m_iRNGResult == player.getColor())
-                {
-                    colorPresent = true;
-                }
+        int m_iRNGResult = 0;
+        int m_iRNGChange = TileToChange();
+        for (int i = 0; i < (tile_list.size()-1); i++)
+        {
+            // Get a new random colour
+            m_iRNGResult = RNG();
 
-                // Change the tile color
-                switch (m_iRNGResult) {
-                    //Red color
-                    case 1:
-                        tile_list.get(i+j).InitSprite(Spr_RedTile, //Bitmap image
-                                numFrames, 1,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Green color
-                    case 2:
-                        tile_list.get(i+j).InitSprite(Spr_GreenTile, //Bitmap image
-                                numFrames, 2,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Blue color
-                    case 3:
-                        tile_list.get(i+j).InitSprite(Spr_BlueTile, //Bitmap image
-                                numFrames, 3,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Yellow color
-                    case 4:
-                        tile_list.get(i+j).InitSprite(Spr_YellowTile, //Bitmap image
-                                numFrames, 4,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Purple color
-                    case 5:
-                        tile_list.get(i+j).InitSprite(Spr_PurpleTile, //Bitmap image
-                                numFrames, 5,       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    default:
-                        break;
-                }
+            // Change the color of a random tile to the player's color
+            if ((i%numOfColumns) == m_iRNGChange)
+            {
+                m_iRNGResult = player.getColor();
             }
-            // If player color isn't present for this row, change a tile to the player's color
-            if (colorPresent == false) {
-                switch (player.getColor()) {
-                    //Red color
-                    case 1:
-                        tile_list.get(i+tileToChange).InitSprite(Spr_RedTile, //Bitmap image
-                                numFrames, player.getColor(),       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Green color
-                    case 2:
-                        tile_list.get(i+tileToChange).InitSprite(Spr_GreenTile, //Bitmap image
-                                numFrames, player.getColor(),       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //Blue color
-                    case 3:
-                        tile_list.get(i+tileToChange).InitSprite(Spr_BlueTile, //Bitmap image
-                                numFrames, player.getColor(),       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //yellow color
-                    case 4:
-                        tile_list.get(i+tileToChange).InitSprite(Spr_YellowTile, //Bitmap image
-                                numFrames, player.getColor(),       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    //purple color
-                    case 5:
-                        tile_list.get(i+tileToChange).InitSprite(Spr_PurpleTile, //Bitmap image
-                                6, player.getColor(),       //Num frames, Start color
-                                playSpeed, true);   //Play speed, Repeat
-                        break;
-                    default:
-                        break;
-                }
+
+            // Changing colour of the tiles
+            switch (m_iRNGResult) {
+                //Red color
+                case 1:
+                    tile_list.get(i).InitSprite(Spr_RedTile, //Bitmap image
+                            numFrames, 1,       //Num frames, Start color
+                            playSpeed, true);   //Play speed, Repeat
+                    break;
+                //Green color
+                case 2:
+                    tile_list.get(i).InitSprite(Spr_GreenTile, //Bitmap image
+                            numFrames, 2,       //Num frames, Start color
+                            playSpeed, true);   //Play speed, Repeat
+                    break;
+                //Blue color
+                case 3:
+                    tile_list.get(i).InitSprite(Spr_BlueTile, //Bitmap image
+                            numFrames, 3,       //Num frames, Start color
+                            playSpeed, true);   //Play speed, Repeat
+                    break;
+                //Yellow color
+                case 4:
+                    tile_list.get(i).InitSprite(Spr_YellowTile, //Bitmap image
+                            numFrames, 4,       //Num frames, Start color
+                            playSpeed, true);   //Play speed, Repeat
+                    break;
+                //Purple color
+                case 5:
+                    tile_list.get(i).InitSprite(Spr_PurpleTile, //Bitmap image
+                            numFrames, 5,       //Num frames, Start color
+                            playSpeed, true);   //Play speed, Repeat
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -686,16 +649,15 @@ public class PlayScene extends SurfaceView implements SurfaceHolder.Callback, Se
                     changeColor(m_iDifficulty);
                     colorChangeStartTime = System.currentTimeMillis();
                 }
-                if ((playerElapsedTime / 1000) > 3){
+                if ((playerElapsedTime / 1000) > 4.7){
                     //Change player color
                     int m_iRNG = RNG();
                     player.setColor(m_iRNG);
-                    changeColor(m_iDifficulty);
                     m_iPlayerColor = m_iRNG;
+                    changeColor(m_iDifficulty);
                     loadColouredImages(m_iPlayerColor);
                     LoadPlayerSprites();
                     playerChangeStartTime = System.currentTimeMillis();
-                    colorChangeStartTime = System.currentTimeMillis();
                 }
             }
             //Accelerometer gameplay
